@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>K.A. — ADİS ve İletişim Destek Uygulaması</title>
+<title>K.A. — ADİS Defteri ve İletişim Desteği</title>
 <style>
 :root{color-scheme:light;--bg:#e8eaeb;--surf:#fff;--ink:#1a2228;--mut:#58656e;--line:#c5cdd2;--acc:#0e6670;--acc2:#fff;--brass:#a8690f;--ok:#216343;--okbg:#dff0e6;--hint:#7d5410;--hintbg:#f7ebd0;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -11,13 +11,15 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 :root[data-theme="dark"]{color-scheme:dark;--bg:#12181c;--surf:#1b242a;--ink:#edf1f3;--mut:#a0adb5;--line:#38454d;--acc:#6fc3cc;--acc2:#0c1a1d;--brass:#e0a54a;--ok:#8fd3ae;--okbg:#1b3327;--hint:#e8c27e;--hintbg:#392f18}
 *{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:20px/1.5 "Atkinson Hyperlegible","Segoe UI",Verdana,sans-serif}
-main{max-width:680px;margin:0 auto;padding:16px 16px 40px}
-h1{font-size:30px;margin:0 0 6px}h2{font-size:22px;margin:0 0 10px}p{margin:0 0 12px}.mut{color:var(--mut);font-size:17px}
+main{max-width:700px;margin:0 auto;padding:16px 16px 40px}
+h1{font-size:30px;margin:0 0 6px}h2{font-size:23px;margin:0 0 10px}p{margin:0 0 12px}.mut{color:var(--mut);font-size:17px}
 button{font:inherit;color:inherit;cursor:pointer}button:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
 .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px}.top b{font-size:22px}
-.tabs{display:flex;gap:8px;margin-bottom:12px}.tab{flex:1;min-height:54px;font-size:18px;font-weight:700;background:var(--surf);border:2px solid var(--line);border-radius:12px}.tab.on{background:var(--acc);color:var(--acc2);border-color:var(--acc)}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.tab{flex:1;min-width:110px;min-height:52px;font-size:17px;font-weight:700;background:var(--surf);border:2px solid var(--line);border-radius:12px;padding:6px 8px}.tab.on{background:var(--acc);color:var(--acc2);border-color:var(--acc)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media (max-width:520px){.grid{grid-template-columns:1fr}}
+.toc-row{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;min-height:58px;padding:10px 14px;margin-bottom:8px;background:var(--surf);border:2px solid var(--line);border-radius:12px;text-align:left;font-size:20px;font-weight:700}
+.toc-row:hover{border-color:var(--acc)}.toc-pg{color:var(--mut);font-size:16px;font-weight:600;white-space:nowrap}
 .job{display:flex;gap:10px;align-items:flex-start;text-align:left;min-height:92px;padding:12px;background:var(--surf);border:2px solid var(--line);border-radius:12px;font-size:19px;font-weight:600}
 .job:hover{border-color:var(--acc)}.job .no{flex:none;width:34px;height:34px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-weight:700}
 .job small{display:block;opacity:.75;font-size:15px;font-weight:500}
@@ -27,20 +29,25 @@ button{font:inherit;color:inherit;cursor:pointer}button:focus-visible,textarea:f
 .voice-box{border-left:6px solid var(--acc);background:var(--surf)}
 .stg{color:var(--mut);font-size:17px;margin-bottom:2px}
 .cue{font-size:24px;font-weight:700}.cat{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:1px 12px;font-size:16px;color:var(--mut);margin-top:8px}
+.item-card{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surf);border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+.item-main{display:flex;align-items:center;gap:12px;flex:1;background:transparent;border:0;padding:4px;text-align:left;font-size:22px;font-weight:700}
+.item-main .e{font-size:34px;flex:none}
+.spk-btn{flex:none;min-width:52px;min-height:52px;border-radius:12px;border:2px solid var(--line);background:var(--bg);font-size:22px;display:inline-flex;align-items:center;justify-content:center}
+.spk-btn:hover{border-color:var(--acc)}
 .opt{display:flex;align-items:center;gap:14px;width:100%;min-height:68px;margin-bottom:10px;padding:10px 16px;text-align:left;font-size:23px;font-weight:700;background:var(--surf);border:2px solid var(--line);border-radius:12px}
 .opt .e{font-size:36px;flex:none}.opt:hover{border-color:var(--acc)}.opt[disabled]{opacity:.42;border-style:dashed;cursor:default}
 .opt.right{background:var(--okbg);border-color:var(--ok);color:var(--ok)}.opt.glow{border-color:var(--brass);box-shadow:0 0 0 3px var(--brass)}.opt.sent{font-size:22px}
-.prim{display:block;width:100%;min-height:62px;padding:12px;font-size:21px;font-weight:700;background:var(--acc);color:var(--acc2);border:0;border-radius:12px;margin-top:6px}
-.ghost{min-height:56px;padding:8px 14px;font-size:18px;background:transparent;border:2px solid var(--line);border-radius:12px}
-.row{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}.row>*{flex:1;min-width:140px}
+.prim{display:block;width:100%;min-height:60px;padding:12px;font-size:20px;font-weight:700;background:var(--acc);color:var(--acc2);border:0;border-radius:12px;margin-top:6px}
+.ghost{min-height:54px;padding:8px 14px;font-size:18px;background:transparent;border:2px solid var(--line);border-radius:12px}
+.row{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}.row>*{flex:1;min-width:130px}
 .hint,.ok{border-radius:10px;padding:10px 14px;font-weight:700;margin-bottom:10px;font-size:19px}.hint{background:var(--hintbg);color:var(--hint)}.ok{background:var(--okbg);color:var(--ok)}
 .seq{font-size:21px}.sl{display:flex;align-items:center;gap:10px;min-height:54px;border:2px dashed var(--line);border-radius:10px;padding:6px 12px;margin-bottom:6px;color:var(--mut)}.sl.f{border-style:solid;border-color:var(--ok);background:var(--okbg);color:var(--ok);font-weight:700}
 .big{font-size:56px;text-align:center;line-height:1.2}.say{font-size:28px;font-weight:700;margin:4px 0 12px}
 .banner{background:var(--okbg);border:2px solid var(--ok);color:var(--ok);border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .banner-txt{font-size:28px;font-weight:700;margin:6px 0 10px}
 table{width:100%;border-collapse:collapse;font-size:15px}td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left}
-textarea{width:100%;font:inherit;font-size:18px;background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:10px;margin:8px 0}
-.ov{position:fixed;inset:0;background:var(--bg);z-index:9;padding:22px;overflow:auto;display:flex;flex-direction:column;justify-content:center;max-width:680px;margin:0 auto}
+textarea{width:100%;font:inherit;font-size:21px;line-height:1.45;background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:12px;margin:8px 0}
+.ov{position:fixed;inset:0;background:var(--bg);z-index:9;padding:22px;overflow:auto;display:flex;flex-direction:column;justify-content:center;max-width:700px;margin:0 auto}
 .ov .t{font-size:32px;font-weight:700;text-align:center;margin-bottom:12px}.hide{display:none!important}
 </style>
 </head>
@@ -48,14 +55,14 @@ textarea{width:100%;font:inherit;font-size:18px;background:var(--bg);color:var(-
 <main id="app"></main>
 <div class="ov hide" id="ov"></div>
 <script>
-// grup|durum|kategori|hedef|emoji|ipucu|seçenekler|cümleler (doğru ilk)|adımlar
+// Ek pratik senaryoları: grup|durum|kategori|hedef|emoji|ipucu|seçenekler|cümleler (doğru ilk)|adımlar
 var D=[
-"d|Kahvaltı için alışveriş.|Yiyecek|ekmek/🍞/Fırından alınır. Sıcak ve yumuşaktır./Ekmeği alıyorum.;Ekmek ben al.;Ekmekte alıyorlar./Markete git;Ekmeği rafta bul;Kasada öde|süt/🥛/Beyazdır. Bardakta içilir./Sütü alıyorum.;Süt ben al.;Sütte alıyorlar./Buzdolabına bak;Sütü seç;Kasada öde|peynir/🧀/Ekmeğin üstüne konur. Sarı ya da beyazdır./Peyniri alıyorum.;Peynir ben al.;Peynirde alıyorlar./Reyona git;Peyniri seç;Kasada öde",
+"d|Kahvaltı için alışveriş.|Yiyecek|ekmek/🍞/Fırından alınır. Sıcak ve yumuşaktır./Ekmeği alıyorum.;Ekmek ben al.;Ekmekte alıyorlar./Markete git;Ekmeği rafta bul;Kasada öde|süt/🥛/Beyazdır. Bardakta içilir./Sütü alıyorum.;Süt ben al.;Sütte alıyorlar./Buzdolabına bak;Sütü seç;Kasada öde|peynir/🧀/Ekmeğin üstüne konur. Sarı ya da beyazdır./Peyniri alıyorum.;Peynir ben al.;Peynirde alıyorlar./Reyona git;Peynir seç;Kasada öde",
 "d|Salata yapacağım.|Yiyecek|domates/🍅/Kırmızıdır. Sebzedir./Domatesi doğruyorum.;Domates ben doğra.;Domateste doğruyorlar./Domatesi yıka;Domatesi kes;Tabağa koy|marul/🥬/Yeşil yapraklıdır. Salatanın altına konur./Marulu yıkıyorum.;Marul ben yıka.;Marulda yıkıyorlar./Marulu al;Marulu yıka;Tabağa koy|salatalık/🥒/Yeşil ve uzundur. Çıtırdar./Salatalığı kesiyorum.;Salatalık ben kes.;Salatalıkta kesiyorlar./Salatalığı al;Salatalığı yıka;Salatalığı kes",
 "d|Eczaneye gidiyorum.|Sağlık|ilaç/💊/Her sabah içilir. Doktor yazar./İlacımı alıyorum.;İlaç ben al.;İlaçta alıyorlar./Reçeteyi göster;İlacı teslim al;Kullanımı sor|krem/🧴/Cilde sürülür./Kremi sürüyorum.;Krem ben sür.;Kremde sürüyorlar./Kapağı aç;Biraz sık;Cilde sür|sargı/🩹/Yaranın üstüne yapıştırılır./Sargıyı yapıştırıyorum.;Sargı ben yapıştır.;Sargıda yapıştırıyorlar./Yarayı temizle;Sargıyı aç;Yaraya yapıştır",
 "d|Kontrole gideceğim.|Sağlık|randevu/📅/Doktor görmek için gün ve saat alınır./Randevuyu alıyorum.;Randevu ben al.;Randevuda alıyorlar./Hastaneyi ara;Günü söyle;Saati yaz|rapor/📄/Muayene sonucu yazılı belgedir./Raporu istiyorum.;Rapor ben iste.;Raporda istiyorlar./Doktora git;Muayene ol;Raporu al|reçete/📝/İlaçların yazıldığı kâğıttır./Reçeteyi alıyorum.;Reçete ben al.;Reçetede alıyorlar./Doktora git;Reçeteyi al;Eczaneye götür",
 "d|Bankada işim var.|İşlem|kart/💳/Para çekmek için kullanılır./Kartımı takıyorum.;Kart ben tak.;Kartta takıyorlar./Kartı tak;Şifreyi gir;Parayı al|makbuz/🧾/İşlem sonunda verilir. Kâğıttır./Makbuzu alıyorum.;Makbuz ben al.;Makbuzda alıyorlar./İşlemi bitir;Makbuzu al;Cüzdana koy|para/💵/Cüzdanda taşınır. Alışverişte verilir./Parayı sayıyorum.;Para ben say.;Parada sayıyorlar./Parayı çıkar;Parayı say;Cüzdana koy",
-"d|Misafir geldi.|İkram|çay/☕/Sıcak içilir. Bardakta verilir./Çayı demliyorum.;Çay ben demle.;Çayda demliyorlar./Suyu kaynat;Çayı demle;Bardağa koy|su/💧/Şeffaftır. Susayınca içilir./Suyu dolduruyorum.;Su ben doldur.;Suda dolduruyorlar./Bardağı al;Suyu doldur;Misafire ver|kurabiye/🍪/Tatlıdır. Çayın yanında yenir./Kurabiyeyi koyuyorum.;Kurabiye ben koy.;Kurabiyede koyuyorlar./Tabağı al;Kurabiyeyi koy;Misafire ver",
+"d|Misafir geldi.|İkram|çay/☕/Sıcak içilir. Bardakta verilir./Çayı demliyorum.;Çay ben demle.;Çayda demliyorlar./Suyu kaynat;Çayı demle;Bardağa koy|su/💧/Şeffaftır. Susayınca içilir./Suyu dolduruyorum.;Su ben doldur.;Suda dolduruyorlar./Bardağı al;Suyu doldur;Misafire ver|kurabiye/🍪/Tatlıdır. Çayın yanında yenir./Kurabiyeyi koyuyorum.;Kurabiye ben koy.;Kurabiyede koyuyorlar./Tabağı al;Kurabiye koy;Misafire ver",
 "d|Aileyi arayacağım.|Ev|telefon/📱/Konuşmak için kullanılır. Cepte taşınır./Telefonu açıyorum.;Telefon ben aç.;Telefonda açıyorlar./Telefonu aç;Numarayı seç;Konuşmaya başla|rehber/📒/Numaralar içine yazılır./Rehberi açıyorum.;Rehber ben aç.;Rehberde açıyorlar./Rehberi aç;İsmi bul;Numarayı seç|şarj/🔌/Pil bitince telefona takılır./Şarjı takıyorum.;Şarj ben tak.;Şarjda takıyorlar./Şarjı al;Prize tak;Telefona tak",
 "d|Kapıyı kilitleyeceğim.|Ev|anahtar/🔑/Kapıyı açar ve kilitler. Küçük ve metaldir./Anahtarı çeviriyorum.;Anahtar ben çevir.;Anahtarda çeviriyorlar./Anahtarı al;Kapıya yaklaş;Kilidi çevir|kapı/🚪/Eve girilen yerdir. Kapanır ve açılır./Kapıyı kapatıyorum.;Kapı ben kapat.;Kapıda kapatıyorlar./Kapıya git;Kapıyı çek;Kapıyı kapat|kilit/🔒/Kapıyı kapalı tutar. Anahtarla açılır./Kilidi kontrol ediyorum.;Kilit ben kontrol et.;Kilitte kontrol ediyorlar./Kapıya git;Kilidi çek;Kapıyı kontrol et",
 "w|Salon lambası yanmıyor.|Elektrik|ampul/💡/Işık verir. Tavanda yanar./Ampulü değiştiriyorum.;Ampul ben değiştir.;Ampulde değiştiriyorlar./Düğmeyi kapat;Eski ampulü çıkar;Yeni ampulü tak|fiş/🔌/Prize takılır. Elektriği getirir./Fişi kontrol ediyorum.;Fiş ben kontrol et.;Fişte kontrol ediyorlar./Fişi bul;Prize bak;Fişi tak|fener/🔦/Karanlıkta ışık verir. Elde taşınır./Feneri yakıyorum.;Fener ben yak.;Fenerde yakıyorlar./Feneri bul;Düğmeye bas;Işığı yönelt",
@@ -66,22 +73,113 @@ var D=[
 "w|Fener çalışmıyor.|Elektrik|pil/🔋/Fenere güç verir. Zamanla biter./Pili değiştiriyorum.;Pil ben değiştir.;Pilde değiştiriyorsun./Kapağı aç;Eski pili çıkar;Yeni pili tak|tornavida/🪛/Vida sıkar ve söker. Sapı ve ucu vardır./Tornavidayla kapağı açıyorum.;Tornavida ben kapak aç.;Tornavidayı kapakta açmak./Tornavidayı al;Vidayı çevir;Kapağı çıkar|ampul/💡/Işık verir. İçinde ince tel vardır./Ampulü kontrol ediyorum.;Ampul ben kontrol et.;Ampulde kontrol ediyorlar./Kapağı aç;Ampule bak;Ampulü sıkıştır"
 ];
 
-var AAC_CARDS=[
- {e:"🗣️",w:"Başka türlü söyleyeceğim",s:"Şu an istediğim kelime çıkmıyor, başka türlü söylemeye çalışacağım."},
- {e:"✍️",w:"Yazarak göstereyim",s:"Konuşmakta zorlanıyorum, yazarak veya işaret ederek göstereyim."},
- {e:"🐢",w:"Yavaş söyler misiniz?",s:"Biraz daha yavaş konuşabilir misiniz, daha rahat anlarım."},
- {e:"🔁",w:"Tekrar eder misiniz?",s:"Bunu tekrar eder misiniz, bir daha dinlemek istiyorum."},
- {e:"☕",w:"Su veya çay isterim",s:"Bir bardak su ya da çay alabilir miyim?"},
- {e:"🛠️",w:"Bana şu alet lazım",s:"İşim için uygun aleti ya da parçayı arıyorum."},
- {e:"⏸️",w:"Biraz mola verelim",s:"Biraz dinlenip nefes alalım, acele etmeyelim."},
- {e:"👍",w:"Evet, anladım",s:"Evet, tam olarak bunu kastediyorum."}
+var BOOK_PAGES=[
+ {id:"ihtiyaclar",pg:"1",title:"İhtiyaçlar",desc:"Temel gereksinimler ve yardım bildirimleri",items:[
+  {e:"🚽",w:"Tuvalete gitmem lazım",s:"Tuvalete gitmem gerekiyor."},
+  {e:"💧",w:"Su istiyorum",s:"Bir bardak su alabilir miyim?"},
+  {e:"🤝",w:"Yardım lazım",s:"Bu konuda bana yardım eder misiniz?"},
+  {e:"⏸️",w:"Mola / dinlenmek istiyorum",s:"Biraz dinlenip mola vermek istiyorum."},
+  {e:"🗣️",w:"Başka türlü söyleyeceğim",s:"Başka türlü anlatmaya çalışacağım."},
+  {e:"✍️",w:"Yazarak göstereyim",s:"Yazarak göstermek istiyorum."}
+ ]},
+ {id:"duygular",pg:"2",title:"Duygular",desc:"O anki duygu ve içsel durum ifadesi",items:[
+  {e:"🙂",w:"İyiyim",s:"Şu an kendimi iyi hissediyorum."},
+  {e:"😴",w:"Yorgunum",s:"Bugün biraz yorgunum."},
+  {e:"😟",w:"Endişeliyim",s:"Biraz endişeli hissediyorum."},
+  {e:"😠",w:"Kızgınım",s:"Bu duruma kızgınım."},
+  {e:"😐",w:"Sıkıldım",s:"Biraz sıkıldım."},
+  {e:"😌",w:"Rahatladım",s:"Şu an daha rahatım."}
+ ]},
+ {id:"saglik",pg:"3",title:"Sağlık Durumu",desc:"Bedensel belirti ve sağlık ihtiyaçları",items:[
+  {e:"💫",w:"Başım dönüyor",s:"Başım dönüyor, oturmak istiyorum."},
+  {e:"💊",w:"İlacımı almam lazım",s:"İlacımı alma zamanım geldi."},
+  {e:"🫁",w:"Nefesim daraldı",s:"Nefes almakta zorlanıyorum."},
+  {e:"🤢",w:"Midem bulanıyor",s:"Midem bulanıyor."},
+  {e:"🩺",w:"Doktora gidelim",s:"Doktorla görüşmemiz iyi olur."},
+  {e:"🏥",w:"Eczaneye gidelim",s:"Eczaneye uğramamız gerekiyor."}
+ ]},
+ {id:"agri",pg:"4",title:"Ağrın var mı? Evet—hayır",desc:"Hızlı ağrı yanıtı ve şiddet/durum bildirimi",items:[
+  {e:"✅",w:"Evet, ağrım var",s:"Evet, şu an ağrım var."},
+  {e:"❌",w:"Hayır, ağrım yok",s:"Hayır, şu an ağrım yok."},
+  {e:"🔸",w:"Biraz var",s:"Hafif düzeyde ağrım var."},
+  {e:"🔺",w:"Çok ağrıyor",s:"Ağrım oldukça fazla."},
+  {e:"📍",w:"Göstererek anlatacağım",s:"Ağrının yerini göstererek anlatacağım."},
+  {e:"🧊",w:"Dinlenince geçiyor",s:"Dinlenince biraz hafifliyor."}
+ ]},
+ {id:"kahvalti",pg:"5",title:"Kahvaltı",desc:"Sabah kahvaltısı tercihleri",items:[
+  {e:"🍞",w:"Ekmek",s:"Kahvaltıda ekmek isterim."},
+  {e:"🧀",w:"Peynir",s:"Kahvaltıda peynir isterim."},
+  {e:"🫒",w:"Zeytin",s:"Kahvaltıda zeytin isterim."},
+  {e:"🥚",w:"Yumurta",s:"Kahvaltıda yumurta isterim."},
+  {e:"🍅",w:"Domates — salatalık",s:"Domates ve salatalık isterim."},
+  {e:"🍯",w:"Bal veya reçel",s:"Bal ya da reçel isterim."}
+ ]},
+ {id:"yemek",pg:"6",title:"Yemek",desc:"Öğle ve akşam yemeği tercihleri",items:[
+  {e:"🍲",w:"Çorba",s:"Yemekte çorba isterim."},
+  {e:"🍛",w:"Ana yemek",s:"Bugün ana yemek isterim."},
+  {e:"🍚",w:"Pilav veya makarna",s:"Yanında pilav ya da makarna olsun."},
+  {e:"🥗",w:"Salata",s:"Yemeğin yanında salata isterim."},
+  {e:"🥣",w:"Yoğurt",s:"Yanına yoğurt alabilir miyim?"},
+  {e:"🍽️",w:"Karnım doydu",s:"Teşekkür ederim, karnım doydu."}
+ ]},
+ {id:"meyve",pg:"7",title:"Meyve",desc:"Meyve seçenekleri",items:[
+  {e:"🍎",w:"Elma",s:"Elma yemek isterim."},
+  {e:"🍌",w:"Muz",s:"Muz yemek isterim."},
+  {e:"🍊",w:"Portakal / mandalina",s:"Portakal ya da mandalina isterim."},
+  {e:"🍐",w:"Armut",s:"Armut yemek isterim."},
+  {e:"🍇",w:"Üzüm",s:"Üzüm isterim."},
+  {e:"🍓",w:"Çilek",s:"Çilek isterim."}
+ ]},
+ {id:"kuruyemis",pg:"7",title:"Kuruyemiş",desc:"Ara öğün kuruyemiş seçenekleri",items:[
+  {e:"🥜",w:"Fıstık",s:"Biraz fıstık isterim."},
+  {e:"🌰",w:"Fındık",s:"Biraz fındık isterim."},
+  {e:"🥥",w:"Ceviz",s:"Biraz ceviz isterim."},
+  {e:" almonds",w:"Badem",s:"Biraz badem isterim."},
+  {e:"🌻",w:"Çekirdek",s:"Biraz çekirdek isterim."},
+  {e:"🥣",w:"Karışık kuruyemiş",s:"Karışık kuruyemiş isterim."}
+ ]},
+ {id:"icecek",pg:"8",title:"İçecek",desc:"Sıcak ve soğuk içecek seçenekleri",items:[
+  {e:"☕",w:"Çay",s:"Bir bardak çay isterim."},
+  {e:"💧",w:"Su",s:"Bir bardak su isterim."},
+  {e:"🥛",w:"Süt",s:"Bir bardak süt isterim."},
+  {e:"🥤",w:"Ayran",s:"Ayran içmek isterim."},
+  {e:"☕",w:"Türk kahvesi",s:"Bir fincan kahve isterim."},
+  {e:"🧃",w:"Meyve suyu",s:"Meyve suyu isterim."}
+ ]},
+ {id:"mekan",pg:"8",title:"Mekan",desc:"Ev içi ve dış mekan bildirimleri",items:[
+  {e:"🛋️",w:"Salon",s:"Salona geçelim."},
+  {e:"🍳",w:"Mutfak",s:"Mutfağa gidelim."},
+  {e:"🛏️",w:"Oda / yatak",s:"Odama geçmek istiyorum."},
+  {e:"🌿",w:"Bahçe / balkon",s:"Biraz dışarı, bahçeye çıkalım."},
+  {e:"🛠️",w:"Atölye",s:"Atölyeye gidelim."},
+  {e:"🛒",w:"Market / çarşı",s:"Market veya çarşıya gidelim."}
+ ]},
+ {id:"esyalar",pg:"9",title:"Eşyalar",desc:"Günlük ve atölye eşyaları",items:[
+  {e:"👓",w:"Gözlük",s:"Gözlüğümü verir misiniz?"},
+  {e:"📱",w:"Telefon",s:"Telefonumu arıyorum."},
+  {e:"🔑",w:"Anahtar",s:"Anahtarım nerede?"},
+  {e:"🪛",w:"Tornavida",s:"Tornavida lazım."},
+  {e:"🔨",w:"Çekiç",s:"Çekiç lazım."},
+  {e:"🔋",w:"Pil / şarj aleti",s:"Pil ya da şarj aleti lazım."}
+ ]},
+ {id:"aile",pg:"10",title:"Aile Üyeleri",desc:"Aile ve yakın çevre kişileri",items:[
+  {e:"👫",w:"Eşim",s:"Eşimle görüşmek istiyorum."},
+  {e:"👦",w:"Oğlum",s:"Oğlumla konuşmak istiyorum."},
+  {e:"👧",w:"Kızım",s:"Kızımla konuşmak istiyorum."},
+  {e:"👶",w:"Torunum",s:"Torunumla vakit geçirmek istiyorum."},
+  {e:"👨‍👩‍👧",w:"Ailem",s:"Ailemle konuşmak istiyorum."},
+  {e:"🙋",w:"Yakınım / bakım veren",s:"Yakınıma haber verelim mi?"}
+ ]}
 ];
+BOOK_PAGES[7].items[3].e="🌰";
 
+var QUICK_PHRASES=["Şunu demek istiyorum: ","Bana lütfen ","Şu an ","İstediğim şey: "];
 var O=D.map(function(r){var f=r.split("|"),it=f.slice(3).map(function(x){var p=x.split("/");return{w:p[0],e:p[1],cue:p[2],c:p[3].split(";"),d:p[4].split(";")}});return{g:f[0],n:f[1],k:f[2],it:it,s:it.map(function(x){return[x.w,x.e]})}});
 var R=[["Başka türlü söyleyeceğim","Tamam, başka türlü söyleyin. Acele yok."],["Yazarak göstereyim","Tamam, yazarak gösterin."],["Yavaş söyler misiniz?","Karşınızdaki kişi yavaş konuşacak."],["Tekrar eder misiniz?","Karşınızdaki kişi tekrar edecek."]];
-var o=0,s=0,tab="d",mainTab="practice",sc=[],got=[],lv=[],lg=[],cf=[],pl=[],pi=[],cur,notes=[],rep=0,mola=0,kol=0,aacUse=0,st,KEY="atolye_adis_v1",$=function(i){return document.getElementById(i)},app=$("app"),ov=$("ov"),lastBanner="";
-function save(){try{localStorage.setItem(KEY,JSON.stringify({got:got,lv:lv,lg:lg,cf:cf,pl:pl,pi:pi,notes:notes,rep:rep,mola:mola,kol:kol,aacUse:aacUse}))}catch(e){}}
-function load(){try{var j=JSON.parse(localStorage.getItem(KEY)||"{}");got=j.got||[];lv=j.lv||[];lg=j.lg||[];cf=j.cf||[];pl=j.pl||[];pi=j.pi||[];notes=j.notes||[];rep=j.rep||0;mola=j.mola||0;kol=j.kol||0;aacUse=j.aacUse||0}catch(e){}}
+var o=0,s=0,tab="d",mainTab="book",curPageId=null,sc=[],got=[],lv=[],lg=[],cf=[],pl=[],pi=[],cur,notes=[],recentTexts=[],draftText="",rep=0,mola=0,kol=0,aacUse=0,writeUse=0,st,KEY="ka_adis_book_v1",$=function(i){return document.getElementById(i)},app=$("app"),ov=$("ov"),lastBanner="";
+
+function save(){try{localStorage.setItem(KEY,JSON.stringify({got:got,lv:lv,lg:lg,cf:cf,pl:pl,pi:pi,notes:notes,recentTexts:recentTexts,rep:rep,mola:mola,kol:kol,aacUse:aacUse,writeUse:writeUse}))}catch(e){}}
+function load(){try{var j=JSON.parse(localStorage.getItem(KEY)||"{}");got=j.got||[];lv=j.lv||[];lg=j.lg||[];cf=j.cf||[];pl=j.pl||[];pi=j.pi||[];notes=j.notes||[];recentTexts=j.recentTexts||[];rep=j.rep||0;mola=j.mola||0;kol=j.kol||0;aacUse=j.aacUse||0;writeUse=j.writeUse||0}catch(e){}}
 function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.random()*(i+1)|0,t=a[i];a[i]=a[j];a[j]=t}return a}
 function Q(d){return d.g=="d"?"Size nasıl yardımcı olabilirim?":"Usta, ne lazım?"}
 function cap(w){return w.charAt(0).toLocaleUpperCase("tr")+w.slice(1)}
@@ -90,49 +188,107 @@ function nd(){return got.filter(Boolean).length}
 function totalVoice(){var t=0;lg.forEach(function(arr){if(!arr)return;arr.forEach(function(a){if(a&&a[2]==1)t++})});return t}
 
 function plan(L){return L==3?["b","x","c","q","r"]:["b","c","q","r"]}
-function head(){return '<div class="top"><div><b>K.A. · ADİS &amp; İletişim</b> <span class="mut">Kronik Broca Afazi</span></div><div class="mut">Görev: '+nd()+'/'+O.length+'</div></div>'}
-function navTabs(){return '<div class="tabs"><button class="tab'+(mainTab=="aac"?" on":"")+'" id="t_aac">ADİS Panosu</button><button class="tab'+(mainTab=="practice"?" on":"")+'" id="t_pr">İletişim Pratiği</button><button class="tab'+(mainTab=="clin"?" on":"")+'" id="t_cl">Klinisyen</button></div>'}
-function bindNav(){$("t_aac").onclick=function(){mainTab="aac";aacBoard()};$("t_pr").onclick=function(){mainTab="practice";menu()};$("t_cl").onclick=function(){mainTab="clin";clin()}}
+function head(){return '<div class="top"><div><b>K.A. · ADİS Defteri</b> <span class="mut">Kronik Broca Afazi</span></div><div class="mut">Görev: '+nd()+'/'+O.length+'</div></div>'}
+function navTabs(){return '<div class="tabs"><button class="tab'+(mainTab=="book"?" on":"")+'" id="t_bk">ADİS Defteri</button><button class="tab'+(mainTab=="write"?" on":"")+'" id="t_wr">Yazarak İfade</button><button class="tab'+(mainTab=="extra"?" on":"")+'" id="t_ex">Ek Pratik</button><button class="tab'+(mainTab=="clin"?" on":"")+'" id="t_cl">Klinisyen</button></div>'}
+function bindNav(){
+ $("t_bk").onclick=function(){mainTab="book";curPageId=null;bookView()};
+ $("t_wr").onclick=function(){mainTab="write";writeView()};
+ $("t_ex").onclick=function(){mainTab="extra";menu()};
+ $("t_cl").onclick=function(){mainTab="clin";clin()};
+}
 function help(K){return '<div class="row">'+(K=="r"?"":'<button class="ghost" id="hb">İpucu</button>')+'<button class="ghost" id="rb">İletişim yardımı</button></div><button class="ghost" id="hm" style="width:100%;margin-top:10px">Mola / Kolaylaştır</button>'}
 
 function welcome(){
  ov.classList.add("hide");
- app.innerHTML='<div style="min-height:72vh;display:flex;flex-direction:column;justify-content:center"><div class="mut" style="margin-bottom:6px">Vaka: K.A. (58, emekli atölye teknikeri)</div><h1 style="font-size:40px">Merhaba</h1><p style="font-size:24px">Hazırsanız başlayalım. Her seçimde hedefi yüksek sesle söylemeyi de deneyeceğiz.</p><p class="mut">Tamamlanan görev: '+nd()+'/'+O.length+' · Sözel deneme: '+totalVoice()+'</p><button class="prim" id="go">ADİS Panosunu Aç</button><button class="ghost" id="pr_go" style="margin-top:12px">İletişim Pratiğine Git</button><button class="ghost" id="cl" style="margin-top:10px">Klinisyen paneli</button></div>';
- $("go").onclick=function(){mainTab="aac";aacBoard()};
- $("pr_go").onclick=function(){mainTab="practice";menu()};
+ app.innerHTML='<div style="min-height:72vh;display:flex;flex-direction:column;justify-content:center"><div class="mut" style="margin-bottom:6px">Vaka: K.A. (58, emekli atölye teknikeri)</div><h1 style="font-size:40px">Merhaba</h1><p style="font-size:23px">ADİS defteri ve yazarak ifade paneli hazır. Ek pratik bölümünde her seçimde sözel üretim de çalışılır.</p><p class="mut">Tamamlanan ek görev: '+nd()+'/'+O.length+' · Sözel deneme: '+totalVoice()+'</p><button class="prim" id="go">ADİS Defterini Aç</button><button class="ghost" id="wr_go" style="margin-top:12px">Yazarak İfade Paneli</button><button class="ghost" id="ex_go" style="margin-top:10px">Ek Pratik (Günlük / İş)</button><button class="ghost" id="cl" style="margin-top:10px">Klinisyen paneli</button></div>';
+ $("go").onclick=function(){mainTab="book";curPageId=null;bookView()};
+ $("wr_go").onclick=function(){mainTab="write";writeView()};
+ $("ex_go").onclick=function(){mainTab="extra";menu()};
  $("cl").onclick=function(){mainTab="clin";clin()};
 }
 
-function aacBoard(){
+function bookView(){
  ov.classList.add("hide");
  var bannerHtml="";
  if(lastBanner){
-  bannerHtml='<div class="banner"><div class="mut">Aktif ADİS Mesajı</div><div class="banner-txt">'+esc(lastBanner)+'</div><div class="row"><button class="ghost" id="b_spk">Tekrar seslendir</button><button class="ghost" id="b_big">Büyük ekranda göster</button><button class="ghost" id="b_clr">Temizle</button></div></div>';
+  bannerHtml='<div class="banner"><div class="mut">Seçilen İfade</div><div class="banner-txt">'+esc(lastBanner)+'</div><div class="row"><button class="spk-btn" id="b_spk" aria-label="Sesli oku">🔊</button><button class="ghost" id="b_big">Büyük göster</button><button class="ghost" id="b_clr">Temizle</button></div></div>';
  }
- var cardsHtml=AAC_CARDS.map(function(c,i){
-  return '<button class="opt" data-a="'+i+'"><span class="e">'+c.e+'</span><span>'+esc(c.w)+'</span></button>';
+ if(!curPageId){
+  var tocHtml=BOOK_PAGES.map(function(p){
+   return '<button class="toc-row" data-p="'+p.id+'"><span>'+esc(p.title)+'</span><span class="toc-pg">'+p.pg+'</span></button>';
+  }).join("");
+  app.innerHTML=head()+navTabs()+'<h2>ADİS Defteri — İçindekiler</h2><p class="mut">Bir kategori seçerek ilgili sayfayı aç.</p>'+bannerHtml+'<div class="card">'+tocHtml+'</div><button class="ghost" id="hm_b" style="width:100%">Mola / Kolaylaştır</button>';
+  bindNav();
+  $("hm_b").onclick=molaMenu;
+  if(lastBanner){
+   $("b_spk").onclick=function(){speak(lastBanner)};
+   $("b_big").onclick=function(){showBig(lastBanner)};
+   $("b_clr").onclick=function(){lastBanner="";bookView()};
+  }
+  [].forEach.call(app.querySelectorAll("[data-p]"),function(b){
+   b.onclick=function(){curPageId=b.dataset.p;bookView()};
+  });
+  return;
+ }
+ var page=BOOK_PAGES.filter(function(p){return p.id===curPageId})[0]||BOOK_PAGES[0];
+ var itemsHtml=page.items.map(function(it,idx){
+  return '<div class="item-card"><button class="item-main" data-pick="'+idx+'"><span class="e">'+it.e+'</span><span>'+esc(it.w)+'</span></button><button class="spk-btn" data-spk="'+idx+'" aria-label="Sesli oku">🔊</button></div>';
  }).join("");
- app.innerHTML=head()+navTabs()+'<h2>ADİS İletişim Panosu</h2><p class="mut">İhtiyacını veya onarım stratejini seç; kart yüksek sesle okunur ve karşısındakine gösterilebilir.</p>'+bannerHtml+'<div class="grid">'+cardsHtml+'</div><div class="card note" style="margin-top:12px"><small>Kural</small>Kartı seçtikten sonra istersen yüksek sesle de söylemeyi dene; takılırsan <b>Mola / Kolaylaştır</b> düğmesini kullan.</div><button class="ghost" id="hm_aac" style="width:100%">Mola / Kolaylaştır</button>';
+ app.innerHTML=head()+navTabs()+'<div class="stg">Sayfa '+page.pg+'</div><h2>'+esc(page.title)+'</h2><p class="mut">'+esc(page.desc)+'</p>'+bannerHtml+itemsHtml+'<div class="row"><button class="ghost" id="bk_toc">İçindekiler</button><button class="ghost" id="hm_p">Mola / Kolaylaştır</button></div>';
  bindNav();
- $("hm_aac").onclick=molaMenu;
+ $("bk_toc").onclick=function(){curPageId=null;bookView()};
+ $("hm_p").onclick=molaMenu;
  if(lastBanner){
   $("b_spk").onclick=function(){speak(lastBanner)};
   $("b_big").onclick=function(){showBig(lastBanner)};
-  $("b_clr").onclick=function(){lastBanner="";aacBoard()};
+  $("b_clr").onclick=function(){lastBanner="";bookView()};
  }
- [].forEach.call(app.querySelectorAll("[data-a]"),function(b){
-  b.onclick=function(){
-   var item=AAC_CARDS[+b.dataset.a];
-   aacUse++;save();
-   lastBanner=item.w;
-   speak(item.s);
-   aacBoard();
-  };
+ [].forEach.call(app.querySelectorAll("[data-spk]"),function(b){
+  b.onclick=function(ev){ev.stopPropagation();var it=page.items[+b.dataset.spk];aacUse++;save();speak(it.s)};
+ });
+ [].forEach.call(app.querySelectorAll("[data-pick]"),function(b){
+  b.onclick=function(){var it=page.items[+b.dataset.pick];aacUse++;save();lastBanner=it.w;speak(it.s);bookView()};
+ });
+}
+
+function writeView(){
+ ov.classList.add("hide");
+ var quickHtml=QUICK_PHRASES.map(function(qp,i){
+  return '<button class="ghost" data-qp="'+i+'">'+esc(qp)+'</button>';
+ }).join("");
+ var recHtml="";
+ if(recentTexts.length){
+  recHtml='<div class="card"><b>Son Yazılan İfadeler</b><div style="margin-top:8px">'+recentTexts.map(function(rt,i){
+   return '<div class="item-card"><button class="item-main" data-rt="'+i+'"><span>'+esc(rt)+'</span></button><button class="spk-btn" data-rtspk="'+i+'" aria-label="Sesli oku">🔊</button></div>';
+  }).join("")+'</div></div>';
+ }
+ app.innerHTML=head()+navTabs()+'<h2>Yazarak Kendini İfade Etme</h2><p class="mut">Kendi cümleni veya kelimeni yaz; 🔊 ile seslendir, büyük ekranda göster veya son ifadelerine kaydet.</p><div class="card"><label for="wr_area" class="mut">İfaden</label><textarea id="wr_area" rows="3" placeholder="Buraya yaz...">'+esc(draftText)+'</textarea><div class="row">'+quickHtml+'</div><div class="row" style="margin-top:10px"><button class="spk-btn" id="wr_spk" aria-label="Sesli oku">🔊</button><button class="prim" id="wr_big" style="margin-top:0">Büyük göster</button><button class="ghost" id="wr_save">Listeye kaydet</button><button class="ghost" id="wr_clr">Temizle</button></div></div>'+recHtml+'<button class="ghost" id="hm_w" style="width:100%">Mola / Kolaylaştır</button>';
+ bindNav();
+ $("hm_w").onclick=molaMenu;
+ var ta=$("wr_area");
+ ta.oninput=function(){draftText=ta.value};
+ [].forEach.call(app.querySelectorAll("[data-qp]"),function(b){
+  b.onclick=function(){draftText=(draftText?draftText+" ":"")+QUICK_PHRASES[+b.dataset.qp];ta.value=draftText;ta.focus()};
+ });
+ $("wr_spk").onclick=function(){var v=ta.value.trim();if(!v)return;writeUse++;save();speak(v)};
+ $("wr_big").onclick=function(){var v=ta.value.trim();if(!v)return;writeUse++;save();showBig(v)};
+ $("wr_save").onclick=function(){
+  var v=ta.value.trim();if(!v)return;
+  writeUse++;
+  recentTexts=[v].concat(recentTexts.filter(function(x){return x!==v})).slice(0,6);
+  save();writeView();
+ };
+ $("wr_clr").onclick=function(){draftText="";ta.value="";ta.focus()};
+ [].forEach.call(app.querySelectorAll("[data-rt]"),function(b){
+  b.onclick=function(){draftText=recentTexts[+b.dataset.rt];ta.value=draftText;ta.focus()};
+ });
+ [].forEach.call(app.querySelectorAll("[data-rtspk]"),function(b){
+  b.onclick=function(){writeUse++;save();speak(recentTexts[+b.dataset.rtspk])};
  });
 }
 
 function showBig(txt){
- ov.innerHTML='<div class="mut" style="text-align:center">Karşıdaki kişiye göster</div><div class="t" style="font-size:38px;margin:18px 0">'+esc(txt)+'</div><button class="ghost" id="big_sp" style="width:100%;margin-bottom:10px">Sesli oku</button><button class="prim" id="big_cl">Kapat</button>';
+ ov.innerHTML='<div class="mut" style="text-align:center">Karşıdaki kişiye göster</div><div class="t" style="font-size:38px;margin:18px 0">'+esc(txt)+'</div><div class="row"><button class="spk-btn" id="big_sp" aria-label="Sesli oku">🔊</button><button class="prim" id="big_cl" style="margin-top:0">Kapat</button></div>';
  ov.classList.remove("hide");
  $("big_sp").onclick=function(){speak(txt)};
  $("big_cl").onclick=function(){ov.classList.add("hide")};
@@ -140,7 +296,7 @@ function showBig(txt){
 
 function menu(){
  ov.classList.add("hide");
- app.innerHTML=head()+navTabs()+'<h1>Ne yapalım?</h1><p class="mut">Bir başlık seçin. Her adımda seçtiğin ifadeyi/adımı sözel olarak da söyleyeceğiz.</p>'+[["d","Günlük aktiviteler","Market, eczane, banka, ev"],["w","İş görevleri","Atölye ve alet işleri"]].map(function(x){var I=O.filter(function(d){return d.g==x[0]}),n=I.filter(function(d){return got[O.indexOf(d)]}).length;return '<button class="opt" data-t="'+x[0]+'" style="display:block;min-height:110px"><span style="font-size:26px">'+x[1]+'</span><br><span class="mut">'+x[2]+' · '+n+'/'+I.length+' tamam</span></button>'}).join("")+'<button class="ghost" id="bk" style="width:100%">Giriş ekranı</button>';
+ app.innerHTML=head()+navTabs()+'<h1>Ek Pratik: İletişim &amp; Görevler</h1><p class="mut">ADİS defterine ek olarak günlük ve iş durumlarında pratik yap. Her seçimde hedefi yüksek sesle söylemeyi dene.</p>'+[["d","Günlük aktiviteler","Market, eczane, banka, ev"],["w","İş görevleri","Atölye ve alet işleri"]].map(function(x){var I=O.filter(function(d){return d.g==x[0]}),n=I.filter(function(d){return got[O.indexOf(d)]}).length;return '<button class="opt" data-t="'+x[0]+'" style="display:block;min-height:106px"><span style="font-size:25px">'+x[1]+'</span><br><span class="mut">'+x[2]+' · '+n+'/'+I.length+' tamam</span></button>'}).join("")+'<button class="ghost" id="bk" style="width:100%">Giriş ekranı</button>';
  bindNav();
  [].forEach.call(app.querySelectorAll("[data-t]"),function(b){b.onclick=function(){tab=b.dataset.t;home()}});
  $("bk").onclick=welcome;
@@ -164,21 +320,25 @@ function stage(){
  var T={b:"Parçayı bul",m:"Soruya cevap seç",x:"Eksik sözcüğü seç",c:"Cümleyi seç",q:"Adımları sırala",r:"Birlikte söyleyelim"};
  var rest=d.c[0].split(" ").slice(1).join(" ");
  var h=head()+'<div class="card note"><small>'+(d.g=="d"?"Günlük yaşam":"Atölye")+' · Düzey '+L+' · Soru '+(ii+1)+'/3 · Her seçimde sözel üretim</small>'+d.n+'</div><div class="stg">İş '+(s+1)+'/'+P.length+'</div><h2>'+T[K]+'</h2>';
- if(K=="b")h+='<div class="card">'+(L<3?'<div class="cue">'+tg.cue+'</div>':'<div class="cue">Soruyu dinleyin.</div><button class="ghost" id="ql" style="margin-top:8px">Soruyu dinle</button>')+'<span class="cat">'+d.k+'</span></div>';
- if(K=="c"&&L<3)h+='<div class="card"><div class="big">'+(L==1?d.e:"")+'</div><p class="cue" style="text-align:center;margin:0">'+d.a+'</p></div>';
- if(K=="m")h+='<div class="card"><div class="say" style="margin:0 0 10px">'+Q(d)+'</div><button class="ghost" id="ql">Soruyu dinle</button></div>';
+ if(K=="b")h+='<div class="card">'+(L<3?'<div class="cue">'+tg.cue+' <button class="spk-btn" data-qspk="1" aria-label="Sesli oku">🔊</button></div>':'<div class="cue">Soruyu dinleyin. <button class="spk-btn" data-qspk="1" aria-label="Sesli oku">🔊</button></div>')+'<span class="cat">'+d.k+'</span></div>';
+ if(K=="c"&&L<3)h+='<div class="card"><div class="big">'+(L==1?d.e:"")+'</div><p class="cue" style="text-align:center;margin:0">'+d.a+' <button class="spk-btn" data-aspk="1" aria-label="Sesli oku">🔊</button></p></div>';
+ if(K=="m")h+='<div class="card"><div class="say" style="margin:0">'+Q(d)+' <button class="spk-btn" data-qspk="2" aria-label="Sesli oku">🔊</button></div></div>';
  if(K=="x")h+='<div class="card"><div class="say" style="margin:0">____ '+rest+'</div></div>';
- if(K=="r")h+='<div class="card"><div class="say" style="margin:0">'+d.c[0]+'</div></div>';
+ if(K=="r")h+='<div class="card"><div class="say" style="margin:0">'+d.c[0]+' <button class="spk-btn" data-rspk="1" aria-label="Sesli oku">🔊</button></div></div>';
  app.innerHTML=h+'<div id="msg"></div><div id="seq" class="seq"></div><div id="opts"></div><div id="voice_box"></div><div id="nxt"></div>'+help(K);
  var box=$("opts");if(K=="q")$("seq").innerHTML='<div class="mut" style="margin-bottom:6px">Oluşan sıra</div>'+[0,1,2].map(function(i){return '<div class="sl" id="sl'+i+'"><b>'+(i+1)+'.</b></div>'}).join("");
  if(K=="r"){
-  box.innerHTML='<button class="ghost" id="sy" style="width:100%;margin-bottom:10px">Sesli oku</button><button class="prim" id="sd">Ben de söyledim</button><button class="ghost" id="sk" style="width:100%;margin-top:10px">Atla</button>';
-  $("sy").onclick=function(){speak(d.c[0])};$("sd").onclick=function(){st.spoken=true;fin(3)};$("sk").onclick=function(){st.spoken=false;fin(0)};
+  box.innerHTML='<button class="prim" id="sd">Ben de söyledim</button><button class="ghost" id="sk" style="width:100%;margin-top:10px">Atla</button>';
+  $("sd").onclick=function(){st.spoken=true;fin(3)};$("sk").onclick=function(){st.spoken=false;fin(0)};
  }else{
   var it=K=="b"?d.s.map(function(x){return{h:(L==1?'<span class="e">'+x[1]+'</span>':"")+x[0],ok:x[0]==tg.w,t:x[0]}}):K=="m"?d.s.map(function(x){return{h:cap(x[0])+" lazım.",ok:x[0]==d.a,t:x[0]}}):K=="x"?d.c.map(function(x,i){var f=x.split(" ")[0];return{h:f,ok:i==0,t:f}}):K=="c"?d.c.map(function(x,i){return{h:x,ok:i==0,t:x,c:" sent"}}):d.d.map(function(x){return{h:x,ok:false,t:x}});
   sh(it).forEach(function(z){var b=document.createElement("button");b.className="opt"+(z.c||"");b.innerHTML=z.h;b.dataset.ok=z.ok?1:0;b.dataset.t=z.t;b.onclick=function(){pick(b)};box.appendChild(b);st.btns.push(b)});
  }
- if($("ql"))$("ql").onclick=function(){speak(K=="b"?tg.cue:Q(d))};if($("hb"))$("hb").onclick=hint;$("rb").onclick=repair;$("hm").onclick=molaMenu;
+ if(app.querySelector("[data-qspk='1']"))app.querySelector("[data-qspk='1']").onclick=function(){speak(tg.cue)};
+ if(app.querySelector("[data-qspk='2']"))app.querySelector("[data-qspk='2']").onclick=function(){speak(Q(d))};
+ if(app.querySelector("[data-aspk]"))app.querySelector("[data-aspk]").onclick=function(){speak(d.a)};
+ if(app.querySelector("[data-rspk]"))app.querySelector("[data-rspk]").onclick=function(){speak(d.c[0])};
+ if($("hb"))$("hb").onclick=hint;$("rb").onclick=repair;$("hm").onclick=molaMenu;
 }
 
 function msg(t,c){$("msg").innerHTML='<div class="'+c+'">'+t+'</div>'}
@@ -198,7 +358,7 @@ function pick(b){
 
 function openVoicePrompt(targetText,star){
  st.done=true;st.pendingStar=star;st.targetText=targetText;
- $("voice_box").innerHTML='<div class="card voice-box"><small style="color:var(--acc);font-weight:700">Sözel Üretim İstemi</small><div style="font-size:23px;font-weight:700;margin:6px 0">Şimdi seçtiğini yüksek sesle söyle:</div><div class="say" style="margin:6px 0 12px">“'+esc(targetText)+'”</div><div class="row"><button class="ghost" id="vp_sp">Sesli model dinle</button><button class="prim" id="vp_ok">Yüksek sesle söyledim</button></div><button class="ghost" id="vp_sk" style="width:100%;margin-top:8px">Bu sefer sözel atla</button></div>';
+ $("voice_box").innerHTML='<div class="card voice-box"><small style="color:var(--acc);font-weight:700">Sözel Üretim İstemi</small><div style="font-size:23px;font-weight:700;margin:6px 0">Şimdi seçtiğini yüksek sesle söyle:</div><div class="say" style="margin:6px 0 12px">“'+esc(targetText)+'” <button class="spk-btn" id="vp_sp" aria-label="Sesli oku">🔊</button></div><div class="row"><button class="prim" id="vp_ok" style="margin-top:0">Yüksek sesle söyledim</button><button class="ghost" id="vp_sk">Bu sefer sözel atla</button></div></div>';
  $("vp_sp").onclick=function(){speak(targetText)};
  $("vp_ok").onclick=function(){st.spoken=true;completeStage(star)};
  $("vp_sk").onclick=function(){st.spoken=false;completeStage(star)};
@@ -234,17 +394,17 @@ function completeStage(star){
 }
 
 function molaMenu(){
- ov.innerHTML='<div class="t">Mola / Kolaylaştır</div><button class="opt" id="m1">Devam et</button><button class="opt" id="m2">Kolaylaştır (daha fazla destek)</button><button class="opt" id="m3">ADİS Panosuna geç</button><button class="opt" id="m4">Mola ver</button>';ov.classList.remove("hide");
+ ov.innerHTML='<div class="t">Mola / Kolaylaştır</div><button class="opt" id="m1">Devam et</button><button class="opt" id="m2">Kolaylaştır (daha fazla destek)</button><button class="opt" id="m3">ADİS Defterine geç</button><button class="opt" id="m4">Mola ver</button>';ov.classList.remove("hide");
  $("m1").onclick=function(){ov.classList.add("hide")};
- $("m2").onclick=function(){kol++;lv[o]=Math.max(1,(lv[o]||1)-1);save();ov.classList.add("hide");if(mainTab=="practice"){s=0;stage()}else{aacBoard()}};
- $("m3").onclick=function(){save();ov.classList.add("hide");mainTab="aac";aacBoard()};
+ $("m2").onclick=function(){kol++;lv[o]=Math.max(1,(lv[o]||1)-1);save();ov.classList.add("hide");if(mainTab=="extra"){s=0;stage()}else if(mainTab=="write"){writeView()}else{bookView()}};
+ $("m3").onclick=function(){save();ov.classList.add("hide");mainTab="book";curPageId=null;bookView()};
  $("m4").onclick=function(){mola++;save();ov.innerHTML='<div class="t">Mola</div><p class="mut" style="text-align:center">Acele yok. Hazır olduğunuzda devam edin.</p><button class="prim" id="m5">Devam et</button>';$("m5").onclick=function(){ov.classList.add("hide")}};
 }
 
 function repair(){
  var h='<div class="t">İletişim yardımı (ADİS Onarım)</div>';R.forEach(function(r,i){h+='<button class="opt" data-r="'+i+'">'+r[0]+'</button>'});
  ov.innerHTML=h+'<button class="ghost" id="cx">Kapat</button>';ov.classList.remove("hide");
- [].forEach.call(ov.querySelectorAll("[data-r]"),function(b){b.onclick=function(){rep++;save();var r=R[b.dataset.r];speak(r[0]);ov.innerHTML='<div class="t">'+r[0]+'</div><p class="mut" style="text-align:center">'+r[1]+'</p><button class="prim" id="cx">Devam et</button>';$("cx").onclick=function(){ov.classList.add("hide")}}});
+ [].forEach.call(ov.querySelectorAll("[data-r]"),function(b){b.onclick=function(){rep++;save();var r=R[b.dataset.r];speak(r[0]);ov.innerHTML='<div class="t">'+r[0]+' <button class="spk-btn" id="rp_sp" aria-label="Sesli oku">🔊</button></div><p class="mut" style="text-align:center">'+r[1]+'</p><button class="prim" id="cx">Devam et</button>';$("rp_sp").onclick=function(){speak(r[0])};$("cx").onclick=function(){ov.classList.add("hide")}}});
  $("cx").onclick=function(){ov.classList.add("hide")};
 }
 
@@ -254,12 +414,12 @@ function clin(){
  var r="",T=0,AE=0,AH=0,SV=0;
  O.forEach(function(d,i){if(lg[i]&&lg[i].length){var e=0,h=0,ok=0,cn=0,sv=0;lg[i].forEach(function(a){if(!a)return;cn++;e+=a[0];h+=a[1];T++;if(!a[0])AE++;if(!a[1])AH++;if(!a[0]&&!a[1])ok++;if(a[2]==1){sv++;SV++}});r+="<tr><td>"+d.n+"</td><td>"+(pl[i]||1)+"</td><td>"+ok+"/"+cn+"</td><td>"+sv+"/"+cn+"</td><td>"+e+"</td><td>"+h+"</td><td>"+["–","Rahat","Biraz zor","Çok zor"][cf[i]||0]+"</td></tr>"}});
  var nl="";notes.forEach(function(x,i){nl+='<div class="card"><div class="mut">'+x.t+'</div><p style="margin:6px 0;white-space:pre-wrap">'+esc(x.x)+'</p><button class="ghost" data-d="'+i+'">Sil</button></div>'});
- app.innerHTML=head()+navTabs()+'<h1>Klinisyen paneli</h1><div class="card"><b>K.A. Oturum Özeti</b><p class="mut">Tamamlanan görev: '+nd()+'/'+O.length+(T?'. Bağımsız aşama (hatasız/ipucusuz): '+(AE+AH)+'/'+T+' · Sözel üretim: '+SV+'/'+T:"")+'. ADİS pano kullanımı: '+aacUse+'. İletişim yardımı: '+rep+' · Mola: '+mola+' · Kolaylaştırma: '+kol+'.</p><div style="overflow-x:auto"><table><tr><th>Görev</th><th>Düzey</th><th>Hatasız</th><th>Sözel</th><th>Yanlış</th><th>İpucu</th><th>Rahatlık</th></tr>'+(r||"<tr><td colspan=7>Henüz oynanmadı.</td></tr>")+'</table></div><p class="mut" style="margin-top:10px">Düzey: 1 tam destek, 2 orta, 3 az destek. Sözel: seçilen öğe/cümle/adım için yüksek sesle üretim denemesi.</p></div><div class="card"><b>Klinisyen notu</b><textarea id="nt" rows="4" placeholder="Oturum notunu yazın"></textarea><button class="prim" id="sv">Notu kaydet</button></div>'+nl+'<button class="prim" id="bk">Giriş ekranına dön</button><button class="ghost" id="rs" style="width:100%;margin-top:14px">İlerlemeyi sıfırla (notlar kalır)</button>';
+ app.innerHTML=head()+navTabs()+'<h1>Klinisyen paneli</h1><div class="card"><b>K.A. Oturum Özeti</b><p class="mut">Tamamlanan ek görev: '+nd()+'/'+O.length+(T?'. Bağımsız aşama: '+(AE+AH)+'/'+T+' · Sözel üretim: '+SV+'/'+T:"")+'. Defter kullanımı: '+aacUse+' · Yazarak ifade: '+writeUse+' · Onarım: '+rep+' · Mola: '+mola+' · Kolaylaştırma: '+kol+'.</p><div style="overflow-x:auto"><table><tr><th>Ek Görev</th><th>Düzey</th><th>Hatasız</th><th>Sözel</th><th>Yanlış</th><th>İpucu</th><th>Rahatlık</th></tr>'+(r||"<tr><td colspan=7>Henüz oynanmadı.</td></tr>")+'</table></div><p class="mut" style="margin-top:10px">Birincil alan: ADİS Defteri (11 başlık) ve Yazarak İfade. Ek Pratik: günlük/iş görevleri ve her seçimde sözel üretim.</p></div><div class="card"><b>Klinisyen notu</b><textarea id="nt" rows="3" placeholder="Oturum notunu yazın"></textarea><button class="prim" id="sv">Notu kaydet</button></div>'+nl+'<button class="prim" id="bk">Giriş ekranına dön</button><button class="ghost" id="rs" style="width:100%;margin-top:14px">İlerlemeyi sıfırla (notlar kalır)</button>';
  bindNav();
  $("bk").onclick=welcome;
  $("sv").onclick=function(){var v=$("nt").value.trim();if(!v)return;notes.unshift({t:new Date().toLocaleString("tr-TR"),x:v});save();clin()};
  [].forEach.call(app.querySelectorAll("[data-d]"),function(b){b.onclick=function(){notes.splice(+b.dataset.d,1);save();clin()}});
- $("rs").onclick=function(){var b=$("rs");if(b.dataset.a){got=[];lv=[];sc=[];lg=[];cf=[];pl=[];pi=[];rep=0;mola=0;kol=0;aacUse=0;save();home()}else{b.dataset.a=1;b.textContent="Emin misiniz? Tekrar dokunun"}};
+ $("rs").onclick=function(){var b=$("rs");if(b.dataset.a){got=[];lv=[];sc=[];lg=[];cf=[];pl=[];pi=[];rep=0;mola=0;kol=0;aacUse=0;writeUse=0;save();bookView()}else{b.dataset.a=1;b.textContent="Emin misiniz? Tekrar dokunun"}};
 }
 load();welcome();
 </script>
