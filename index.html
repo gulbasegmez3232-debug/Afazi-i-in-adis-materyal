@@ -34,6 +34,8 @@ button{font:inherit;color:inherit;cursor:pointer}button:focus-visible,textarea:f
 .item-main .e{font-size:34px;flex:none}
 .spk-btn{flex:none;min-width:52px;min-height:52px;border-radius:12px;border:2px solid var(--line);background:var(--bg);font-size:22px;display:inline-flex;align-items:center;justify-content:center}
 .spk-btn:hover{border-color:var(--acc)}
+.mini-btn{flex:none;min-height:46px;padding:6px 12px;border-radius:10px;border:2px solid var(--line);background:transparent;font-size:16px;font-weight:700}
+.mini-btn:hover{border-color:var(--acc)}
 .opt{display:flex;align-items:center;gap:14px;width:100%;min-height:68px;margin-bottom:10px;padding:10px 16px;text-align:left;font-size:23px;font-weight:700;background:var(--surf);border:2px solid var(--line);border-radius:12px}
 .opt .e{font-size:36px;flex:none}.opt:hover{border-color:var(--acc)}.opt[disabled]{opacity:.42;border-style:dashed;cursor:default}
 .opt.right{background:var(--okbg);border-color:var(--ok);color:var(--ok)}.opt.glow{border-color:var(--brass);box-shadow:0 0 0 3px var(--brass)}.opt.sent{font-size:22px}
@@ -258,7 +260,7 @@ function writeView(){
  var recHtml="";
  if(recentTexts.length){
   recHtml='<div class="card"><b>Son Yazılan İfadeler</b><div style="margin-top:8px">'+recentTexts.map(function(rt,i){
-   return '<div class="item-card"><button class="item-main" data-rt="'+i+'"><span>'+esc(rt)+'</span></button><button class="spk-btn" data-rtspk="'+i+'" aria-label="Sesli oku">🔊</button></div>';
+   return '<div class="item-card"><span style="flex:1;font-size:21px;font-weight:700">'+esc(rt)+'</span><button class="mini-btn" data-rtuse="'+i+'">Al</button><button class="spk-btn" data-rtspk="'+i+'" aria-label="Sesli oku">🔊</button><button class="mini-btn" data-rtdel="'+i+'">Sil</button></div>';
   }).join("")+'</div></div>';
  }
  app.innerHTML=head()+navTabs()+'<h2>Yazarak Kendini İfade Etme</h2><p class="mut">Kendi cümleni veya kelimeni yaz; 🔊 ile seslendir, büyük ekranda göster veya son ifadelerine kaydet.</p><div class="card"><label for="wr_area" class="mut">İfaden</label><textarea id="wr_area" rows="3" placeholder="Buraya yaz...">'+esc(draftText)+'</textarea><div class="row">'+quickHtml+'</div><div class="row" style="margin-top:10px"><button class="spk-btn" id="wr_spk" aria-label="Sesli oku">🔊</button><button class="prim" id="wr_big" style="margin-top:0">Büyük göster</button><button class="ghost" id="wr_save">Listeye kaydet</button><button class="ghost" id="wr_clr">Temizle</button></div></div>'+recHtml+'<button class="ghost" id="hm_w" style="width:100%">Mola / Kolaylaştır</button>';
@@ -274,15 +276,18 @@ function writeView(){
  $("wr_save").onclick=function(){
   var v=ta.value.trim();if(!v)return;
   writeUse++;
-  recentTexts=[v].concat(recentTexts.filter(function(x){return x!==v})).slice(0,6);
+  recentTexts=[v].concat(recentTexts.filter(function(x){return x!==v})).slice(0,8);
   save();writeView();
  };
  $("wr_clr").onclick=function(){draftText="";ta.value="";ta.focus()};
- [].forEach.call(app.querySelectorAll("[data-rt]"),function(b){
-  b.onclick=function(){draftText=recentTexts[+b.dataset.rt];ta.value=draftText;ta.focus()};
+ [].forEach.call(app.querySelectorAll("[data-rtuse]"),function(b){
+  b.onclick=function(){draftText=recentTexts[+b.dataset.rtuse];ta.value=draftText;ta.focus()};
  });
  [].forEach.call(app.querySelectorAll("[data-rtspk]"),function(b){
   b.onclick=function(){writeUse++;save();speak(recentTexts[+b.dataset.rtspk])};
+ });
+ [].forEach.call(app.querySelectorAll("[data-rtdel]"),function(b){
+  b.onclick=function(){recentTexts.splice(+b.dataset.rtdel,1);save();writeView()};
  });
 }
 
