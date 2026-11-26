@@ -55,9 +55,9 @@ textarea{width:100%;font:inherit;font-size:21px;line-height:1.45;background:var(
 <main id="app"></main>
 <div class="ov hide" id="ov"></div>
 <script>
-// grup|durum|kategori|hedef|emoji|ipucu|seçenekler|cümleler (doğru ilk)|adımlar
+// Ek pratik senaryoları: grup|durum|kategori|hedef|emoji|ipucu|seçenekler|cümleler (doğru ilk)|adımlar
 var D=[
-"d|Kahvaltı için alışveriş.|Yiyecek|ekmek/🍞/Fırından alınır. Sıcak ve yumuşaktır./Ekmeği alıyorum.;Ekmek ben al.;Ekmekte alıyorlar./Markete git;Ekmeği rafta bul;Kasada öde|süt/🥛/Beyazdır. Bardakta içilir./Sütü alıyorum.;Süt ben al.;Sütte alıyorlar./Buzdolabına bak;Sütü seç;Kasada öde|peynir/🧀/Ekmeğin üstüne konur. Sarı ya da beyazdır./Peyniri alıyorum.;Peynir ben al.;Peynirde alıyorlar./Reyona git;Peyniri seç;Kasada öde",
+"d|Kahvaltı için alışveriş.|Yiyecek|ekmek/🍞/Fırından alınır. Sıcak ve yumuşaktır./Ekmeği alıyorum.;Ekmek ben al.;Ekmekte alıyorlar./Markete git;Ekmeği rafta bul;Kasada öde|süt/🥛/Beyazdır. Bardakta içilir./Sütü alıyorum.;Süt ben al.;Sütte alıyorlar./Buzdolabına bak;Sütü seç;Kasada öde|peynir/🧀/Ekmeğin üstüne konur. Sarı ya da beyazdır./Peyniri alıyorum.;Peynir ben al.;Peynirde alıyorlar./Reyona git;Peynir seç;Kasada öde",
 "d|Salata yapacağım.|Yiyecek|domates/🍅/Kırmızıdır. Sebzedir./Domatesi doğruyorum.;Domates ben doğra.;Domateste doğruyorlar./Domatesi yıka;Domatesi kes;Tabağa koy|marul/🥬/Yeşil yapraklıdır. Salatanın altına konur./Marulu yıkıyorum.;Marul ben yıka.;Marulda yıkıyorlar./Marulu al;Marulu yıka;Tabağa koy|salatalık/🥒/Yeşil ve uzundur. Çıtırdar./Salatalığı kesiyorum.;Salatalık ben kes.;Salatalıkta kesiyorlar./Salatalığı al;Salatalığı yıka;Salatalığı kes",
 "d|Eczaneye gidiyorum.|Sağlık|ilaç/💊/Her sabah içilir. Doktor yazar./İlacımı alıyorum.;İlaç ben al.;İlaçta alıyorlar./Reçeteyi göster;İlacı teslim al;Kullanımı sor|krem/🧴/Cilde sürülür./Kremi sürüyorum.;Krem ben sür.;Kremde sürüyorlar./Kapağı aç;Biraz sık;Cilde sür|sargı/🩹/Yaranın üstüne yapıştırılır./Sargıyı yapıştırıyorum.;Sargı ben yapıştır.;Sargıda yapıştırıyorlar./Yarayı temizle;Sargıyı aç;Yaraya yapıştır",
 "d|Kontrole gideceğim.|Sağlık|randevu/📅/Doktor görmek için gün ve saat alınır./Randevuyu alıyorum.;Randevu ben al.;Randevuda alıyorlar./Hastaneyi ara;Günü söyle;Saati yaz|rapor/📄/Muayene sonucu yazılı belgedir./Raporu istiyorum.;Rapor ben iste.;Raporda istiyorlar./Doktora git;Muayene ol;Raporu al|reçete/📝/İlaçların yazıldığı kâğıttır./Reçeteyi alıyorum.;Reçete ben al.;Reçetede alıyorlar./Doktora git;Reçeteyi al;Eczaneye götür",
@@ -195,7 +195,7 @@ function bindNav(){
  $("t_ex").onclick=function(){mainTab="extra";menu()};
  $("t_cl").onclick=function(){mainTab="clin";clin()};
 }
-function help(K){return '<div class="row">'+(K=="r"?"":'<button class="ghost" id="hb">İpucu</button>')+'<button class="ghost" id="rb">İletişim yardımı</button></div><button class="ghost" id="hm" style="width:100%;margin-top:10px">Mola / Kolaylaştır</button>'}
+function help(K){return '<div class="row">'+(K=="r"?"":'<button class="ghost" id="hb">İpucu</button>')+'<button class="ghost" id="rb">İletişim yardımı</button><button class="ghost" id="gb">Görev listesi</button></div><button class="ghost" id="hm" style="width:100%;margin-top:10px">Mola / Kolaylaştır</button>'}
 
 function welcome(){
  ov.classList.add("hide");
@@ -306,9 +306,10 @@ function home(){
  var n=I.filter(function(i){return got[i]}).length;
  var h=head()+navTabs()+'<h2>'+(tab=="d"?"Günlük aktiviteler":"İş görevleri")+'</h2><p class="mut">Tamamlanan: '+n+'/'+I.length+'. Bir görev seçin. Yeşil görevleri bir üst düzeyde tekrar oynayabilirsiniz.</p><div class="grid">';
  I.forEach(function(i,k){var ok=!!got[i];h+='<button class="job'+(ok?" done":"")+'" data-i="'+i+'"><span class="no">'+(ok?"✓":k+1)+'</span><span>'+O[i].n+'<small>Düzey '+(lv[i]||1)+' · '+Math.min(3,pi[i]||0)+'/3 soru</small></span></button>'});
- app.innerHTML=h+'</div><button class="ghost" id="bm" style="width:100%;margin-top:14px">Geri</button>';
+ app.innerHTML=h+'</div><div class="row" style="margin-top:14px"><button class="ghost" id="bm">Aktivite / İş Seçimi</button><button class="ghost" id="b_main">Giriş Ekranı</button></div>';
  bindNav();
  $("bm").onclick=menu;
+ $("b_main").onclick=welcome;
  [].forEach.call(app.querySelectorAll(".job"),function(b){b.onclick=function(){o=+b.dataset.i;s=0;if((pi[o]||0)>=3)pi[o]=0;stage()}});
 }
 
@@ -337,7 +338,7 @@ function stage(){
  if(app.querySelector("[data-qspk='2']"))app.querySelector("[data-qspk='2']").onclick=function(){speak(Q(d))};
  if(app.querySelector("[data-aspk]"))app.querySelector("[data-aspk]").onclick=function(){speak(d.a)};
  if(app.querySelector("[data-rspk]"))app.querySelector("[data-rspk]").onclick=function(){speak(d.c[0])};
- if($("hb"))$("hb").onclick=hint;$("rb").onclick=repair;$("hm").onclick=molaMenu;
+ if($("hb"))$("hb").onclick=hint;$("rb").onclick=repair;$("gb").onclick=home;$("hm").onclick=molaMenu;
 }
 
 function msg(t,c){$("msg").innerHTML='<div class="'+c+'">'+t+'</div>'}
