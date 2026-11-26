@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Atölye Siparişleri</title>
+<style>
+:root{color-scheme:light;--bg:#e8eaeb;--surf:#fff;--ink:#1a2228;--mut:#58656e;--line:#c5cdd2;--acc:#0e6670;--acc2:#fff;--brass:#a8690f;--ok:#216343;--okbg:#dff0e6;--hint:#7d5410;--hintbg:#f7ebd0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#12181c;--surf:#1b242a;--ink:#edf1f3;--mut:#a0adb5;--line:#38454d;--acc:#6fc3cc;--acc2:#0c1a1d;--brass:#e0a54a;--ok:#8fd3ae;--okbg:#1b3327;--hint:#e8c27e;--hintbg:#392f18}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#12181c;--surf:#1b242a;--ink:#edf1f3;--mut:#a0adb5;--line:#38454d;--acc:#6fc3cc;--acc2:#0c1a1d;--brass:#e0a54a;--ok:#8fd3ae;--okbg:#1b3327;--hint:#e8c27e;--hintbg:#392f18}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:20px/1.5 "Atkinson Hyperlegible","Segoe UI",Verdana,sans-serif}
+main{max-width:640px;margin:0 auto;padding:16px 16px 36px}
+h1{font-size:30px;margin:0 0 6px}h2{font-size:22px;margin:0 0 10px}p{margin:0 0 12px}.mut{color:var(--mut);font-size:17px}
+button{font:inherit;color:inherit;cursor:pointer}button:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}.top b{font-size:22px}.top span{color:var(--mut);font-size:17px;margin-left:10px}.pts{font-weight:700;color:var(--brass);font-size:22px}
+.tabs{display:flex;gap:8px;margin-bottom:10px}.tab{flex:1;min-height:56px;font-size:19px;font-weight:700;background:var(--surf);border:2px solid var(--line);border-radius:12px}.tab.on{background:var(--acc);color:var(--acc2);border-color:var(--acc)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.job{display:flex;gap:10px;align-items:flex-start;text-align:left;min-height:92px;padding:12px;background:var(--surf);border:2px solid var(--line);border-radius:12px;font-size:19px;font-weight:600}
+.job:hover{border-color:var(--acc)}.job .no{flex:none;width:34px;height:34px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-weight:700}
+.job small{display:block;opacity:.7;font-size:15px;font-weight:500}
+.job.done{background:var(--okbg);border-color:var(--ok);color:var(--ok)}.job.done .no{background:var(--ok);color:var(--acc2)}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+.note{border-left:6px solid var(--brass)}.note small{display:block;color:var(--mut);font-size:16px}
+.stg{color:var(--mut);font-size:17px;margin-bottom:2px}
+.cue{font-size:25px;font-weight:700}.cat{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:1px 12px;font-size:16px;color:var(--mut);margin-top:8px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;min-height:68px;margin-bottom:10px;padding:10px 16px;text-align:left;font-size:24px;font-weight:700;background:var(--surf);border:2px solid var(--line);border-radius:12px}
+.opt .e{font-size:36px}.opt:hover{border-color:var(--acc)}.opt[disabled]{opacity:.4;border-style:dashed;cursor:default}
+.opt.right{background:var(--okbg);border-color:var(--ok);color:var(--ok)}.opt.glow{border-color:var(--brass);box-shadow:0 0 0 3px var(--brass)}.opt.sent{font-size:23px}
+.prim{display:block;width:100%;min-height:64px;padding:12px;font-size:22px;font-weight:700;background:var(--acc);color:var(--acc2);border:0;border-radius:12px;margin-top:6px}
+.ghost{min-height:58px;padding:8px 14px;font-size:19px;background:transparent;border:2px solid var(--line);border-radius:12px}
+.row{display:flex;gap:10px;margin-top:6px}.row>*{flex:1}
+.hint,.ok{border-radius:10px;padding:10px 14px;font-weight:700;margin-bottom:10px;font-size:20px}.hint{background:var(--hintbg);color:var(--hint)}.ok{background:var(--okbg);color:var(--ok)}
+.seq{font-size:22px}.sl{display:flex;align-items:center;gap:10px;min-height:54px;border:2px dashed var(--line);border-radius:10px;padding:6px 12px;margin-bottom:6px;color:var(--mut)}.sl.f{border-style:solid;border-color:var(--ok);background:var(--okbg);color:var(--ok);font-weight:700}
+.big{font-size:56px;text-align:center;line-height:1.2}.say{font-size:30px;font-weight:700;margin:4px 0 12px}
+table{width:100%;border-collapse:collapse;font-size:16px}td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left}
+textarea{width:100%;font:inherit;font-size:18px;background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:10px;margin:8px 0}
+.ov{position:fixed;inset:0;background:var(--bg);z-index:9;padding:22px;overflow:auto;display:flex;flex-direction:column;justify-content:center;max-width:640px;margin:0 auto}
+.ov .t{font-size:34px;font-weight:700;text-align:center;margin-bottom:12px}.hide{display:none!important}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<div class="ov hide" id="ov"></div>
+<script>
+// grup|durum|hedef|emoji|kategori|ipucu|seçenekler|cümleler (doğru ilk)|adımlar
+var D=[
+"d|Kahvaltı için alışveriş.|Yiyecek|ekmek/🍞/Fırından alınır. Sıcak ve yumuşaktır./Ekmeği alıyorum.;Ekmek ben al.;Ekmekte alıyorlar./Markete git;Ekmeği rafta bul;Kasada öde|süt/🥛/Beyazdır. Bardakta içilir./Sütü alıyorum.;Süt ben al.;Sütte alıyorlar./Buzdolabına bak;Sütü seç;Kasada öde|peynir/🧀/Ekmeğin üstüne konur. Sarı ya da beyazdır./Peyniri alıyorum.;Peynir ben al.;Peynirde alıyorlar./Reyona git;Peyniri seç;Kasada öde",
+"d|Salata yapacağım.|Yiyecek|domates/🍅/Kırmızıdır. Sebzedir./Domatesi doğruyorum.;Domates ben doğra.;Domateste doğruyorlar./Domatesi yıka;Domatesi kes;Tabağa koy|marul/🥬/Yeşil yapraklıdır. Salatanın altına konur./Marulu yıkıyorum.;Marul ben yıka.;Marulda yıkıyorlar./Marulu al;Marulu yıka;Tabağa koy|salatalık/🥒/Yeşil ve uzundur. Çıtırdar./Salatalığı kesiyorum.;Salatalık ben kes.;Salatalıkta kesiyorlar./Salatalığı al;Salatalığı yıka;Salatalığı kes",
+"d|Eczaneye gidiyorum.|Sağlık|ilaç/💊/Her sabah içilir. Doktor yazar./İlacımı alıyorum.;İlaç ben al.;İlaçta alıyorlar./Reçeteyi göster;İlacı teslim al;Kullanımı sor|krem/🧴/Cilde sürülür./Kremi sürüyorum.;Krem ben sür.;Kremde sürüyorlar./Kapağı aç;Biraz sık;Cilde sür|sargı/🩹/Yaranın üstüne yapıştırılır./Sargıyı yapıştırıyorum.;Sargı ben yapıştır.;Sargıda yapıştırıyorlar./Yarayı temizle;Sargıyı aç;Yaraya yapıştır",
+"d|Kontrole gideceğim.|Sağlık|randevu/📅/Doktor görmek için gün ve saat alınır./Randevuyu alıyorum.;Randevu ben al.;Randevuda alıyorlar./Hastaneyi ara;Günü söyle;Saati yaz|rapor/📄/Muayene sonucu yazılı belgedir./Raporu istiyorum.;Rapor ben iste.;Raporda istiyorlar./Doktora git;Muayene ol;Raporu al|reçete/📝/İlaçların yazıldığı kâğıttır./Reçeteyi alıyorum.;Reçete ben al.;Reçetede alıyorlar./Doktora git;Reçeteyi al;Eczaneye götür",
+"d|Bankada işim var.|İşlem|kart/💳/Para çekmek için kullanılır./Kartımı takıyorum.;Kart ben tak.;Kartta takıyorlar./Kartı tak;Şifreyi gir;Parayı al|makbuz/🧾/İşlem sonunda verilir. Kâğıttır./Makbuzu alıyorum.;Makbuz ben al.;Makbuzda alıyorlar./İşlemi bitir;Makbuzu al;Cüzdana koy|para/💵/Cüzdanda taşınır. Alışverişte verilir./Parayı sayıyorum.;Para ben say.;Parada sayıyorlar./Parayı çıkar;Parayı say;Cüzdana koy",
+"d|Misafir geldi.|İkram|çay/☕/Sıcak içilir. Bardakta verilir./Çayı demliyorum.;Çay ben demle.;Çayda demliyorlar./Suyu kaynat;Çayı demle;Bardağa koy|su/💧/Şeffaftır. Susayınca içilir./Suyu dolduruyorum.;Su ben doldur.;Suda dolduruyorlar./Bardağı al;Suyu doldur;Misafire ver|kurabiye/🍪/Tatlıdır. Çayın yanında yenir./Kurabiyeyi koyuyorum.;Kurabiye ben koy.;Kurabiyede koyuyorlar./Tabağı al;Kurabiyeyi koy;Misafire ver",
+"d|Aileyi arayacağım.|Ev|telefon/📱/Konuşmak için kullanılır. Cepte taşınır./Telefonu açıyorum.;Telefon ben aç.;Telefonda açıyorlar./Telefonu aç;Numarayı seç;Konuşmaya başla|rehber/📒/Numaralar içine yazılır./Rehberi açıyorum.;Rehber ben aç.;Rehberde açıyorlar./Rehberi aç;İsmi bul;Numarayı seç|şarj/🔌/Pil bitince telefona takılır./Şarjı takıyorum.;Şarj ben tak.;Şarjda takıyorlar./Şarjı al;Prize tak;Telefona tak",
+"d|Kapıyı kilitleyeceğim.|Ev|anahtar/🔑/Kapıyı açar ve kilitler. Küçük ve metaldir./Anahtarı çeviriyorum.;Anahtar ben çevir.;Anahtarda çeviriyorlar./Anahtarı al;Kapıya yaklaş;Kilidi çevir|kapı/🚪/Eve girilen yerdir. Kapanır ve açılır./Kapıyı kapatıyorum.;Kapı ben kapat.;Kapıda kapatıyorlar./Kapıya git;Kapıyı çek;Kapıyı kapat|kilit/🔒/Kapıyı kapalı tutar. Anahtarla açılır./Kilidi kontrol ediyorum.;Kilit ben kontrol et.;Kilitte kontrol ediyorlar./Kapıya git;Kilidi çek;Kapıyı kontrol et",
+"w|Salon lambası yanmıyor.|Elektrik|ampul/💡/Işık verir. Tavanda yanar./Ampulü değiştiriyorum.;Ampul ben değiştir.;Ampulde değiştiriyorlar./Düğmeyi kapat;Eski ampulü çıkar;Yeni ampulü tak|fiş/🔌/Prize takılır. Elektriği getirir./Fişi kontrol ediyorum.;Fiş ben kontrol et.;Fişte kontrol ediyorlar./Fişi bul;Prize bak;Fişi tak|fener/🔦/Karanlıkta ışık verir. Elde taşınır./Feneri yakıyorum.;Fener ben yak.;Fenerde yakıyorlar./Feneri bul;Düğmeye bas;Işığı yönelt",
+"w|Raf gevşemiş.|Montaj|vida/🔩/Tornavida ile sıkılır. Dişlidir./Vidayı sıkıyorum.;Vida ben sık.;Vidada sıkıyorlar./Tornavidayı al;Vidayı deliğe koy;Vidayı sık|tornavida/🪛/Vida sıkar ve söker. Sapı ve ucu vardır./Tornavidayı alıyorum.;Tornavida ben al.;Tornavidada alıyorlar./Aletliği aç;Tornavidayı seç;Vidaya uydur|metre/📏/Uzunluk ölçer. Santimetre yazar./Metreyle ölçüyorum.;Metre ben ölç.;Metreyi ölçüyorsunuz./Metreyi aç;Rafı ölç;Sayıyı yaz",
+"w|Çit tahtası sallanıyor.|Onarım|çekiç/🔨/Çivi çakılır. Sapı ve başı vardır./Çekiçle çivi çakıyorum.;Çekiç ben çivi çak.;Çekici çivi çakmak./Çekici al;Çiviyi tahtaya koy;Çiviyi çak|testere/🪚/Odunu keser. Dişleri vardır./Testereyle kesiyorum.;Testere ben kes.;Testereyi kesiyorsunuz./Tahtayı işaretle;Tahtayı sabitle;Tahtayı kes|merdiven/🪜/Yüksek yere çıkılır. Basamakları vardır./Merdiveni dayıyorum.;Merdiven ben daya.;Merdivende dayıyorlar./Merdiveni aç;Zemine sağlam koy;Yavaşça çık",
+"w|Makine ses çıkarıyor.|Bakım|dişli/⚙️/Makinede döner. Çarkın dişleri vardır./Dişliyi yağlıyorum.;Dişli ben yağla.;Dişlide yağlıyorsun./Makineyi durdur;Dişliyi yağla;Makineyi çalıştır|mıknatıs/🧲/Demiri çeker. İki kutbu vardır./Mıknatısla talaşı topluyorum.;Mıknatıs ben talaş topla.;Mıknatısı talaşlar toplamak./Mıknatısı al;Talaşa yaklaştır;Talaşı kutuya at|fener/🔦/Karanlıkta ışık verir. Elde taşınır./Feneri tutuyorum.;Fener ben tut.;Fenerde tutuyorlar./Feneri al;Makineyi aydınlat;Sesi dinle",
+"w|Atölyeyi toplayalım.|Düzen|çanta/🧰/Aletler içine konur. Taşınır./Aletleri çantaya koyuyorum.;Aletler çanta koymak.;Çantayı aletlere koyuyor./Çantayı aç;Aletleri koy;Çantayı kapat|mıknatıs/🧲/Demiri çeker. İki kutbu vardır./Mıknatısla vidaları topluyorum.;Mıknatıs ben vida topla.;Mıknatısı vidalar toplamak./Mıknatısı al;Vidalara yaklaştır;Vidaları kutuya koy|çekiç/🔨/Çivi çakılır. Sapı ve başı vardır./Çekici yerine asıyorum.;Çekiç ben yer as.;Çekiçte asıyorlar./Çekici al;Panoya götür;Kancaya as",
+"w|Fener çalışmıyor.|Elektrik|pil/🔋/Fenere güç verir. Zamanla biter./Pili değiştiriyorum.;Pil ben değiştir.;Pilde değiştiriyorsun./Kapağı aç;Eski pili çıkar;Yeni pili tak|tornavida/🪛/Vida sıkar ve söker. Sapı ve ucu vardır./Tornavidayla kapağı açıyorum.;Tornavida ben kapak aç.;Tornavidayı kapakta açmak./Tornavidayı al;Vidayı çevir;Kapağı çıkar|ampul/💡/Işık verir. İçinde ince tel vardır./Ampulü kontrol ediyorum.;Ampul ben kontrol et.;Ampulde kontrol ediyorlar./Kapağı aç;Ampule bak;Ampulü sıkıştır",
+var O=D.map(function(r){var f=r.split("|"),it=f.slice(3).map(function(x){var p=x.split("/");return{w:p[0],e:p[1],cue:p[2],c:p[3].split(";"),d:p[4].split(";")}});return{g:f[0],n:f[1],k:f[2],it:it,s:it.map(function(x){return[x.w,x.e]})}});
+var R=[["Başka türlü söyleyeceğim","Tamam, başka türlü söyleyin. Acele yok."],["Yazarak göstereyim","Tamam, yazarak gösterin."],["Yavaş söyler misiniz?","Karşınızdaki kişi yavaş konuşacak."],["Tekrar eder misiniz?","Karşınızdaki kişi tekrar edecek."]];
+var o=0,s=0,tab="d",sc=[],got=[],lv=[],lg=[],cf=[],pl=[],pi=[],cur,notes=[],rep=0,mola=0,kol=0,st,KEY="atolye5",$=function(i){return document.getElementById(i)},app=$("app"),ov=$("ov");
+function save(){try{localStorage.setItem(KEY,JSON.stringify({got:got,lv:lv,lg:lg,cf:cf,pl:pl,pi:pi,notes:notes,rep:rep,mola:mola,kol:kol}))}catch(e){}}
+function load(){try{var j=JSON.parse(localStorage.getItem(KEY)||"{}");got=j.got||[];lv=j.lv||[];lg=j.lg||[];cf=j.cf||[];pl=j.pl||[];pi=j.pi||[];notes=j.notes||[];rep=j.rep||0;mola=j.mola||0;kol=j.kol||0}catch(e){}}
+function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.random()*(i+1)|0,t=a[i];a[i]=a[j];a[j]=t}return a}
+function Q(d){return d.g=="d"?"Size nasıl yardımcı olabilirim?":"Usta, ne lazım?"}
+function cap(w){return w.charAt(0).toLocaleUpperCase("tr")+w.slice(1)}
+function esc(t){return String(t).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+function nd(){return got.filter(Boolean).length}
+
+function plan(L){return L==3?["b","x","c","q","r"]:["b","c","q","r"]}
+function head(){return '<div class="top"><div><b>Atölye</b></div><div class="mut">Tamamlanan: '+nd()+'/'+O.length+'</div></div>'}
+function help(K){return '<div class="row">'+(K=="r"?"":'<button class="ghost" id="hb">İpucu</button>')+'<button class="ghost" id="rb">İletişim yardımı</button></div><button class="ghost" id="hm" style="width:100%;margin-top:10px">Mola / Kolaylaştır</button>'}
+function welcome(){
+ ov.classList.add("hide");
+ app.innerHTML='<div style="min-height:72vh;display:flex;flex-direction:column;justify-content:center"><h1 style="font-size:42px">Merhaba</h1><p style="font-size:26px">Hazırsanız başlayalım.</p><p class="mut">Tamamlanan görev: '+nd()+'/'+O.length+'</p><button class="prim" id="go">Başlayalım</button><button class="ghost" id="cl" style="margin-top:14px">Klinisyen paneli</button></div>';
+ $("go").onclick=menu;$("cl").onclick=clin;
+}
+function menu(){
+ ov.classList.add("hide");
+ app.innerHTML='<h1>Ne yapalım?</h1><p class="mut">Bir başlık seçin.</p>'+[["d","Günlük aktiviteler","Market, eczane, banka, ev"],["w","İş görevleri","Atölye ve alet işleri"]].map(function(x){var I=O.filter(function(d){return d.g==x[0]}),n=I.filter(function(d){return got[O.indexOf(d)]}).length;return '<button class="opt" data-t="'+x[0]+'" style="display:block;min-height:110px"><span style="font-size:26px">'+x[1]+'</span><br><span class="mut">'+x[2]+' · '+n+'/'+I.length+' tamam</span></button>'}).join("")+'<button class="ghost" id="bk" style="width:100%">Geri</button>';
+ [].forEach.call(app.querySelectorAll("[data-t]"),function(b){b.onclick=function(){tab=b.dataset.t;home()}});
+ $("bk").onclick=welcome;
+}
+function home(){
+ ov.classList.add("hide");var I=[];O.forEach(function(d,i){if(d.g==tab)I.push(i)});
+ var n=I.filter(function(i){return got[i]}).length;
+ var h=head()+'<h2>'+(tab=="d"?"Günlük aktiviteler":"İş görevleri")+'</h2><p class="mut">Tamamlanan: '+n+'/'+I.length+'. Bir görev seçin. Yeşil görevleri bir üst düzeyde tekrar oynayabilirsiniz.</p><div class="grid">';
+ I.forEach(function(i,k){var ok=!!got[i];h+='<button class="job'+(ok?" done":"")+'" data-i="'+i+'"><span class="no">'+(ok?"✓":k+1)+'</span><span>'+O[i].n+'<small>Düzey '+(lv[i]||1)+' · '+Math.min(3,pi[i]||0)+'/3 soru</small></span></button>'});
+ app.innerHTML=h+'</div><button class="ghost" id="bm" style="width:100%;margin-top:14px">Geri</button>';
+ $("bm").onclick=menu;
+ [].forEach.call(app.querySelectorAll(".job"),function(b){b.onclick=function(){o=+b.dataset.i;s=0;if((pi[o]||0)>=3)pi[o]=0;stage()}});
+ }
+function stage(){
+ var T0=O[o],ii=pi[o]||0,it=T0.it[ii],d=cur={g:T0.g,n:T0.n,k:T0.k,a:it.w,e:it.e,ip:it.cue,s:T0.s,c:it.c,d:it.d,tg:[{w:it.w,cue:it.cue}]},L=lv[o]||1,P=plan(L),K=P[s],tg=d.tg[0];
+ if(s==0&&!(pi[o]||0)){lg[o]=[]}
+ st={c:0,e:0,hn:0,h:0,btns:[],nx:0,done:false,K:K,L:L,tg:tg};
+ var T={b:"Parçayı bul",m:"Soruya cevap seç",x:"Eksik sözcüğü seç",c:"Cümleyi seç",q:"Adımları sırala",r:"Birlikte söyleyelim"};
+ var rest=d.c[0].split(" ").slice(1).join(" ");
+ var h=head()+'<div class="card note"><small>'+(d.g=="d"?"Günlük yaşam":"Atölye")+' · Düzey '+L+' · Soru '+(ii+1)+'/3</small>'+d.n+'</div><div class="stg">İş '+(s+1)+'/'+P.length+'</div><h2>'+T[K]+'</h2>';
+ if(K=="b")h+='<div class="card">'+(L<3?'<div class="cue">'+tg.cue+'</div>':'<div class="cue">Soruyu dinleyin.</div><button class="ghost" id="ql" style="margin-top:8px">Soruyu dinle</button>')+'<span class="cat">'+d.k+'</span></div>';
+ if(K=="c"&&L<3)h+='<div class="card"><div class="big">'+(L==1?d.e:"")+'</div><p class="cue" style="text-align:center;margin:0">'+d.a+'</p></div>';
+ if(K=="m")h+='<div class="card"><div class="say" style="margin:0 0 10px">'+Q(d)+'</div><button class="ghost" id="ql">Soruyu dinle</button></div>';
+ if(K=="x")h+='<div class="card"><div class="say" style="margin:0">____ '+rest+'</div></div>';
+ if(K=="r")h+='<div class="card"><div class="say" style="margin:0">'+d.c[0]+'</div></div>';
+ app.innerHTML=h+'<div id="msg"></div><div id="seq" class="seq"></div><div id="opts"></div><div id="nxt"></div>'+help(K);
+ var box=$("opts");if(K=="q")$("seq").innerHTML='<div class="mut" style="margin-bottom:6px">Oluşan sıra</div>'+[0,1,2].map(function(i){return '<div class="sl" id="sl'+i+'"><b>'+(i+1)+'.</b></div>'}).join("");
+ if(K=="r"){
+  box.innerHTML='<button class="ghost" id="sy" style="width:100%;margin-bottom:10px">Sesli oku</button><button class="prim" id="sd">Ben de söyledim</button><button class="ghost" id="sk" style="width:100%;margin-top:10px">Atla</button>';
+  $("sy").onclick=function(){speak(d.c[0])};$("sd").onclick=function(){fin(3)};$("sk").onclick=function(){fin(0)};
+ }else{
+  var it=K=="b"?d.s.map(function(x){return{h:(L==1?'<span class="e">'+x[1]+'</span>':"")+x[0],ok:x[0]==tg.w,t:x[0]}}):K=="m"?d.s.map(function(x){return{h:cap(x[0])+" lazım.",ok:x[0]==d.a,t:x[0]}}):K=="x"?d.c.map(function(x,i){var f=x.split(" ")[0];return{h:f,ok:i==0,t:f}}):K=="c"?d.c.map(function(x,i){return{h:x,ok:i==0,t:x,c:" sent"}}):d.d.map(function(x){return{h:x,ok:false,t:x}});
+  sh(it).forEach(function(z){var b=document.createElement("button");b.className="opt"+(z.c||"");b.innerHTML=z.h;b.dataset.ok=z.ok?1:0;b.dataset.t=z.t;b.onclick=function(){pick(b)};box.appendChild(b);st.btns.push(b)});
+ }
+ if($("ql"))$("ql").onclick=function(){speak(K=="b"?tg.cue:Q(d))};if($("hb"))$("hb").onclick=hint;$("rb").onclick=repair;$("hm").onclick=molaMenu;
+}
+function msg(t,c){$("msg").innerHTML='<div class="'+c+'">'+t+'</div>'}
+function wrong(){st.c++;st.e++;msg(st.K=="q"?"Başka bir adım deneyin.":"Bir daha bakalım.","hint")}
+function stars(){return st.c==0?3:st.c==1?2:1}
+function pick(b){
+ if(st.done)return;var d=cur;
+ if(st.K!="q"){if(b.dataset.ok=="1"){b.classList.add("right");fin(stars())}else{b.disabled=true;wrong()}}
+ else if(b.dataset.t==d.d[st.nx]){b.classList.add("hide");var sl=$("sl"+st.nx);sl.className="sl f";sl.innerHTML="<b>"+(st.nx+1)+".</b> "+b.dataset.t;st.nx++;st.btns.forEach(function(x){x.classList.remove("glow")});$("msg").innerHTML="";if(st.nx==3)fin(stars())}
+ else wrong();
+}
+function hint(){
+ if(st.done)return;var d=cur,K=st.K;st.c++;st.hn++;
+ if(K=="q"){var n=st.btns.filter(function(x){return x.dataset.t==d.d[st.nx]})[0];if(n)n.classList.add("glow");msg("İşaretli kart sıradaki adım.","hint");return}
+ if(K=="b"&&st.L==3&&st.h==0){st.h=1;msg(st.tg.cue,"hint");return}
+ if(K=="b"&&st.h<2){st.h=2;msg("İlk harf: "+st.tg.w.charAt(0).toUpperCase(),"hint");return}
+ var w=st.btns.filter(function(x){return x.dataset.ok=="0"&&!x.disabled})[0];
+ if(w){w.disabled=true;msg("Bir seçenek elendi.","hint")}
+}
+function fin(star){
+ st.done=true;var d=cur,L=st.L,last=s==plan(L).length-1,ex="";
+ lg[o][(pi[o]||0)*8+s]=[st.e,st.hn,star?1:0];pl[o]=L;
+ st.btns.forEach(function(x){x.disabled=true});if(st.K=="r")$("opts").innerHTML="";
+ var fl=false;if(last){pi[o]=(pi[o]||0)+1;fl=pi[o]>=3;if(fl)got[o]=d.e;var n=lg[o].reduce(function(a,b){return b?a+b[0]+b[1]:a},0);
+  if(fl&&n<=4&&L<3){lv[o]=L+1;ex='<div class="hint">Bir sonraki oynayışta destek azalacak (Düzey '+(L+1)+').</div>'}}
+ save();
+ msg(st.K=="r"?(star?"Tamam.":"Geçildi."):st.c==0?"Doğru. İpucu kullanmadınız.":"Doğru. "+(st.hn?st.hn+" ipucuyla":"")+(st.hn&&st.e?", ":"")+(st.e?st.e+" yanlış denemeyle":"")+" tamamlandı.","ok");
+ $("nxt").innerHTML=ex+(fl?'<p class="mut" style="margin:10px 0 6px">Bu görev nasıldı?</p><div class="row"><button class="ghost" data-f="1">Rahat</button><button class="ghost" data-f="2">Biraz zor</button><button class="ghost" data-f="3">Çok zor</button></div>':'<button class="prim" id="nx">'+(last?"Sonraki soru":"Devam")+'</button>');
+ if(fl)[].forEach.call(document.querySelectorAll("[data-f]"),function(b){b.onclick=function(){cf[o]=+b.dataset.f;save();home()}});else $("nx").onclick=function(){if(last)s=0;else s++;stage()};
+}
+function molaMenu(){
+ ov.innerHTML='<div class="t">Mola / Kolaylaştır</div><button class="opt" id="m1">Devam et</button><button class="opt" id="m2">Kolaylaştır (daha fazla destek)</button><button class="opt" id="m3">Konuyu değiştir</button><button class="opt" id="m4">Mola ver</button>';ov.classList.remove("hide");
+ $("m1").onclick=function(){ov.classList.add("hide")};
+ $("m2").onclick=function(){kol++;lv[o]=Math.max(1,(lv[o]||1)-1);save();ov.classList.add("hide");s=0;stage()};
+ $("m3").onclick=function(){save();home()};
+ $("m4").onclick=function(){mola++;save();ov.innerHTML='<div class="t">Mola</div><p class="mut" style="text-align:center">Acele yok. Hazır olduğunuzda devam edin.</p><button class="prim" id="m5">Devam et</button>';$("m5").onclick=function(){ov.classList.add("hide")}};
+}
+function repair(){
+ var h='<div class="t">İletişim yardımı</div>';R.forEach(function(r,i){h+='<button class="opt" data-r="'+i+'">'+r[0]+'</button>'});
+ ov.innerHTML=h+'<button class="ghost" id="cx">Kapat</button>';ov.classList.remove("hide");
+ [].forEach.call(ov.querySelectorAll("[data-r]"),function(b){b.onclick=function(){rep++;save();var r=R[b.dataset.r];ov.innerHTML='<div class="t">'+r[0]+'</div><p class="mut" style="text-align:center">'+r[1]+'</p><button class="prim" id="cx">Devam et</button>';$("cx").onclick=function(){ov.classList.add("hide")}}});
+ $("cx").onclick=function(){ov.classList.add("hide")};
+}
+function speak(t){try{var u=new SpeechSynthesisUtterance(t);u.lang="tr-TR";u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function clin(){
+ var r="",T=0,AE=0,AH=0;O.forEach(function(d,i){if(lg[i]&&lg[i].length){var e=0,h=0,ok=0,cn=0;lg[i].forEach(function(a){if(!a)return;cn++;e+=a[0];h+=a[1];T++;if(!a[0])AE++;if(!a[1])AH++;if(!a[0]&&!a[1])ok++});r+="<tr><td>"+d.n+"</td><td>"+(pl[i]||1)+"</td><td>"+ok+"/"+cn+"</td><td>"+e+"</td><td>"+h+"</td><td>"+["–","Rahat","Biraz zor","Çok zor"][cf[i]||0]+"</td></tr>"}});
+ var nl="";notes.forEach(function(x,i){nl+='<div class="card"><div class="mut">'+x.t+'</div><p style="margin:6px 0;white-space:pre-wrap">'+esc(x.x)+'</p><button class="ghost" data-d="'+i+'">Sil</button></div>'});
+ app.innerHTML=head()+'<h1>Klinisyen paneli</h1><div class="card"><b>Oturum özeti</b><p class="mut">Tamamlanan görev: '+nd()+'/'+O.length+(T?'. Yanlışsız aşama: '+AE+'/'+T+'. İpucusuz aşama: '+AH+'/'+T:"")+'. İletişim yardımı: '+rep+' kez. Mola: '+mola+'. Kolaylaştırma: '+kol+'.</p><div style="overflow-x:auto"><table><tr><th>Görev</th><th>Düzey</th><th>Bağımsız aşama</th><th>Yanlış seçim</th><th>İpucu</th><th>Rahatlık</th></tr>'+(r||"<tr><td colspan=6>Henüz oynanmadı.</td></tr>")+'</table></div><p class="mut" style="margin-top:10px">Düzey: 1 tam destek, 2 orta, 3 az destek. Bağımsız aşama: yanlış seçimsiz ve ipucusuz biten aşama. Rahatlık: görev sonunda danışanın bildirimi.</p></div><div class="card"><b>Klinisyen notu</b><textarea id="nt" rows="4" placeholder="Oturum notunu yazın"></textarea><button class="prim" id="sv">Notu kaydet</button></div>'+nl+'<button class="prim" id="bk">Başa dön</button><button class="ghost" id="rs" style="width:100%;margin-top:14px">İlerlemeyi sıfırla (notlar kalır)</button>';
+ $("bk").onclick=welcome;
+ $("sv").onclick=function(){var v=$("nt").value.trim();if(!v)return;notes.unshift({t:new Date().toLocaleString("tr-TR"),x:v});save();clin()};
+ [].forEach.call(app.querySelectorAll("[data-d]"),function(b){b.onclick=function(){notes.splice(+b.dataset.d,1);save();clin()}});
+ $("rs").onclick=function(){var b=$("rs");if(b.dataset.a){got=[];lv=[];sc=[];lg=[];cf=[];pl=[];pi=[];rep=0;mola=0;kol=0;save();home()}else{b.dataset.a=1;b.textContent="Emin misiniz? Tekrar dokunun"}};
+}
+load();welcome();
+</script>
+</body>
+</html>
